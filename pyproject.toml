@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "flask-ddd"
+version = "0.1.0"
+description = "This repository for trying ddd using flask"
+authors = ["amazingguni <amazingguni@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "^1.1.2"
+Flask-SQLAlchemy = "^2.4.4"
+Flask-Migrate = "^2.7.0"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.7.2"
+coverage = "^5.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
