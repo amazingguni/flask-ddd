@@ -31,9 +31,6 @@ def test_order_line_model(session, order):
     assert get_order_line.product_id is order_line.product_id
 
 
-    
-    
-
 @pytest.fixture(scope='function')
 def order(session):
     _order = Order()
