@@ -9,10 +9,13 @@ python = "^3.7"
 Flask = "^1.1.2"
 Flask-SQLAlchemy = "^2.4.4"
 Flask-Migrate = "^2.7.0"
+Flask-Script = "^2.0.6"
+Flask-Cors = "^3.0.10"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.7.2"
 coverage = "^5.5"
+pytest = "^6.2.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
