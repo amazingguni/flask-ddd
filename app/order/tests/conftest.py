@@ -3,8 +3,8 @@ import pytest
 from app.order.domain.order import Order
 
 @pytest.fixture(scope='function')
-def order(session):
+def order(db_session):
     _order = Order()
-    session.add(_order)
-    session.commit()
+    db_session.add(_order)
+    db_session.commit()
     return _order    
