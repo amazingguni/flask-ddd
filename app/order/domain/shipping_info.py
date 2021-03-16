@@ -63,7 +63,7 @@ class ShippingInfo(object):
         return not self.__eq__(other)
 
     @classmethod
-    def _generate(self, receiver_name, receiver_phone, \
+    def _generate(cls, receiver_name, receiver_phone, \
             zip_code, address1, address2, message):
         return ShippingInfo(
             Receiver(receiver_name, receiver_phone),
@@ -73,7 +73,6 @@ class ShippingInfo(object):
 
     def __composite_values__(self):
         return \
-            self.address.__composite_values__() + \
-            self.receiver.__composite_values__() + \
-            self.message.__composite_values__()
+            self.address.__composite_values__() + self.receiver.__composite_values__(), \
+            self.message
 

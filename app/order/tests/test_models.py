@@ -1,4 +1,3 @@
-import pytest
 
 from app.order.domain.order import Order
 from app.order.domain.orderer import Orderer
@@ -29,11 +28,3 @@ def test_order_line_model(session, order):
     get_order_line = OrderLine.query.filter_by(product_id=order_line.product_id).first()
 
     assert get_order_line.product_id is order_line.product_id
-
-
-@pytest.fixture(scope='function')
-def order(session):
-    _order = Order()
-    session.add(_order)
-    session.commit()
-    return _order    
