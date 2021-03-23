@@ -1,5 +1,5 @@
-from app.category.domain.category import Category
-from app.category.domain.product import Product
+from app.catalog.domain.category import Category
+from app.catalog.domain.product import Product
 
 def test_category(db_session):
     category = Category(
@@ -23,6 +23,6 @@ def test_product(db_session):
     db_session.add(product)
     db_session.commit()
 
-    # get_product = Product.query.filter_by(id=product.id).first()
-    # assert get_product.categories[0].name == 'Meat'
+    get_product = db_session.query(Product).filter_by(id=product.id).first()
+    assert get_product.categories[0].name == 'Meat'
 

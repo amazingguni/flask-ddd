@@ -25,6 +25,5 @@ def test_order_line_model(db_session, order):
     db_session.add(order_line)
     db_session.commit()
 
-    get_order_line = OrderLine.query.filter_by(product_id=order_line.product_id).first()
-
+    get_order_line = db_session.query(OrderLine).filter_by(product_id=order_line.product_id).first()
     assert get_order_line.product_id is order_line.product_id

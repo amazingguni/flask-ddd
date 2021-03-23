@@ -30,5 +30,3 @@ def _db(app):
     yield db
 
     db.drop_all()
-
-
