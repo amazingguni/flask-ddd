@@ -11,7 +11,7 @@ def test_order(db_session):
         message='fast please'
         )
     order = Order(
-        orderer=Orderer(member_id='123', name='customer_A'),
+        orderer=Orderer(user_id='123', name='customer_A'),
         shipping_info=shipping_info
         )
 

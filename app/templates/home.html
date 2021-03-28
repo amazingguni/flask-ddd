@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>마이샵</title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="jumbotron">
-        <h3>오늘의 특가</h3>
-        <p>라즈베리파이 3</p>
-        <p>
-          <a class="btn btn-primary" href="/products/prod-001" role="button"
-            >상품 보기</a
-          >
-        </p>
-      </div>
-    </div>
-  </body>
-</html>
+{% extends "base.html" %} {% block content %}
+<div class="jumbotron">
+  <h3>오늘의 특가</h3>
+  <p>라즈베리파이 3</p>
+  <p>
+    <a class="btn btn-primary" href="/products/prod-001" role="button"
+      >상품 보기</a
+    >
+  </p>
+</div>
+{% endblock %}
