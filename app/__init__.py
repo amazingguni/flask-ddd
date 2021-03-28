@@ -33,8 +33,10 @@ def create_app(config_name):
     # Blueprints
     from app.user.views import bp as user_bp
     app.register_blueprint(user_bp)
-    from app.catalog.ui import blueprint as catalog_blueprint
-    app.register_blueprint(catalog_blueprint)
+    from app.catalog.views import bp as catalog_bp
+    app.register_blueprint(catalog_bp)
+    from app.admin.views import bp as admin_bp
+    app.register_blueprint(admin_bp)
 
     
 

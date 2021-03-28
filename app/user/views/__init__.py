@@ -8,7 +8,8 @@ from app.user.domain.register_form import RegisterForm
 from app import db
 from ..domain.user import User
 
-bp = Blueprint('user', __name__, url_prefix='/user/')
+bp = Blueprint('user', __name__, 
+    template_folder='../templates', static_folder="../static", url_prefix='/user/')
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -25,7 +26,7 @@ def login():
         flash('You were logged in.')
         next = request.args.get('next')
         return redirect(next or url_for('home'))
-    return render_template('login.html')
+    return render_template('user/login.html')
 
 @bp.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -42,7 +43,22 @@ def signup():
         db.session.commit()
         login_user(user)
         return redirect(url_for('home'))
-    return render_template('signin.html')
+    return render_template('user/signin.html')
 
 
+@bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You were logged out.')
+    return render_template('user/logged-out.html')
     
+@bp.route('/my')
+@login_required
+def my():
+    return render_template('user/my.html')
+
+@bp.route('/orders')
+@login_required
+def orders():
+    return render_template('user/orders.html')

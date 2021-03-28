@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+
+{% block title %} 관리자 : 주문 목록 {% endblock %}
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="/admin/main">관리자</a></li>
+    <li class="active"><a href="/admin/orders">주문 관리</a></li>
+</ol>
+<h2>주문 목록</h2>
+{% if orderPage and orderPage.items|length %}
+{% else %}
+    <div class="alert alert-info" role="alert">
+        주문 내역이 없습니다.
+    </div>
+{% endif %}
+    
+{% endblock %}
