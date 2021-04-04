@@ -1,12 +1,9 @@
-{% extends "base.html" %} 
-
-{% block title %} 제품 목록 {% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %} 제품 목록 {% endblock %} {% block
+content %}
 <h3>카테고리 목록</h3>
 <ul>
-{% for category in categories %}
-    <li><a href="/categories/{{category.id}}">{{category.name}}</a></li>
-{% endfor %}
+  {% for category in categories %}
+  <li><a href="/categories/{{category.id}}">{{category.name}}</a></li>
+  {% endfor %}
 </ul>
 {% endblock %}

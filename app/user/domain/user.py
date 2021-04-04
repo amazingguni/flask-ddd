@@ -1,5 +1,5 @@
-from sqlalchemy import Boolean, DateTime, Column, Integer, \
-                       String
+from sqlalchemy import Boolean, Column, Integer, \
+    String
 from app import db
 
 
@@ -14,9 +14,11 @@ class User(db.Model):
     @property
     def is_authenticated(self):
         return True
+
     @property
     def is_active(self):
         return True
+
     @property
     def is_anonymous(self):
         return False

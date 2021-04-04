@@ -1,9 +1,7 @@
-{% extends "base.html" %} 
-
-{% block title %} 마이 페이지 {% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %} 마이 페이지 {% endblock %} {% block
+content %}
 <h2>{{ current_user.username }} 님</h2>
-    <ul>
-        <li><a href="{{url_for('user.orders')}}">주문 목록 보기</a></li>
-    </ul>
+<ul>
+  <li><a href="{{ url_for('user.orders') }}">주문 목록 보기</a></li>
+</ul>
 {% endblock %}

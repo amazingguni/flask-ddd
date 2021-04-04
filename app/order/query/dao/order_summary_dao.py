@@ -1,17 +1,15 @@
-
 import abc
-from typing import List
-from app.order.query.dto.order_summary import OrderSummary
 
 
 class OrderSummaryDao(abc.ABC):
     @abc.abstractmethod
-    def select_by_orderer(self, orderer_id:int):
+    def select_by_orderer(self, orderer_id: int):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def counts(self, filters:dict):
+    def counts(self, filters: dict):
         raise NotImplementedError
-    
-    # List<OrderSummary> select(Specification<OrderSummary> spec, int firstRow, int maxResults);
-    # long counts(Specification<OrderSummary> spec);
+
+    @abc.abstractmethod
+    def select(self, filters: dict, offset: int, limit: int):
+        raise NotImplementedError

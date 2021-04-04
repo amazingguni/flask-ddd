@@ -16,11 +16,13 @@ Flask-WTF = "^0.14.3"
 SQLAlchemy-Utils = "^0.36.8"
 SQLAlchemy = "^1.4.5"
 pytest-mock = "^3.5.1"
+dependency-injector = "^4.31.2"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.7.2"
 coverage = "^5.5"
 pytest = "^6.2.2"
+autopep8 = "^1.5.6"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

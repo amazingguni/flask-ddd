@@ -6,4 +6,4 @@ This repository for trying ddd using flask
 
 - https://github.com/perwagner/flask-api-minimum-boilerplate/blob/master/tests/conftest.py
 - https://github.com/hack4impact/flask-base/blob/master/app/__init__.py
-- https://github.com/hack4impact/flask-base/blob/master/app/models/user.py
+-

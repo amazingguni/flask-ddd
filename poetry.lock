@@ -48,6 +48,18 @@ tests = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)"
 tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six"]
 
 [[package]]
+name = "autopep8"
+version = "1.5.6"
+description = "A tool that automatically formats Python code to conform to the PEP 8 style guide"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+pycodestyle = ">=2.7.0"
+toml = "*"
+
+[[package]]
 name = "click"
 version = "7.1.2"
 description = "Composable command line interface toolkit"
@@ -73,6 +85,23 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
 
 [package.extras]
 toml = ["toml"]
+
+[[package]]
+name = "dependency-injector"
+version = "4.31.2"
+description = "Dependency injection framework for Python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+six = ">=1.7.0,<=1.15.0"
+
+[package.extras]
+aiohttp = ["aiohttp"]
+flask = ["flask"]
+pydantic = ["pydantic"]
+yaml = ["pyyaml"]
 
 [[package]]
 name = "flask"
@@ -308,6 +337,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
+name = "pycodestyle"
+version = "2.7.0"
+description = "Python style guide checker"
+category = "dev"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[[package]]
 name = "pylint"
 version = "2.7.2"
 description = "python code static checker"
@@ -530,7 +567,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b541bf4d47c702ea02e612c5227430e5138b5980bd6c5d84cf6e67b3a7b9d63c"
+content-hash = "929d2f39cc8b32bbc240670947a59be756bb1b3252ba33d42a141d48e72ed137"
 
 [metadata.files]
 alembic = [
@@ -548,6 +585,10 @@ atomicwrites = [
 attrs = [
     {file = "attrs-20.3.0-py2.py3-none-any.whl", hash = "sha256:31b2eced602aa8423c2aea9c76a724617ed67cf9513173fd3a4f03e3a929c7e6"},
     {file = "attrs-20.3.0.tar.gz", hash = "sha256:832aa3cde19744e49938b91fea06d69ecb9e649c93ba974535d08ad92164f700"},
+]
+autopep8 = [
+    {file = "autopep8-1.5.6-py2.py3-none-any.whl", hash = "sha256:f01b06a6808bc31698db907761e5890eb2295e287af53f6693b39ce55454034a"},
+    {file = "autopep8-1.5.6.tar.gz", hash = "sha256:5454e6e9a3d02aae38f866eec0d9a7de4ab9f93c10a273fb0340f3d6d09f7514"},
 ]
 click = [
     {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
@@ -610,6 +651,72 @@ coverage = [
     {file = "coverage-5.5-pp36-none-any.whl", hash = "sha256:f030f8873312a16414c0d8e1a1ddff2d3235655a2174e3648b4fa66b3f2f1079"},
     {file = "coverage-5.5-pp37-none-any.whl", hash = "sha256:2a3859cb82dcbda1cfd3e6f71c27081d18aa251d20a17d87d26d4cd216fb0af4"},
     {file = "coverage-5.5.tar.gz", hash = "sha256:ebe78fe9a0e874362175b02371bdfbee64d8edc42a044253ddf4ee7d3c15212c"},
+]
+dependency-injector = [
+    {file = "dependency-injector-4.31.2.tar.gz", hash = "sha256:e41965456ae640d4b73c1e2b98267322f71f49dea7906f5da558559bc139a684"},
+    {file = "dependency_injector-4.31.2-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:365581b95249a691d1f7afef6bb5955464b3c073925038460ead4103aac27f1c"},
+    {file = "dependency_injector-4.31.2-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:7736708f2afe5df252749d99dcd1005b7fdfd468a44d1d95a707a20e0a41b619"},
+    {file = "dependency_injector-4.31.2-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:036b53f2a5269228eabb9d4ae37ba45dc7039c59305c76fb80c2b33a81fdd218"},
+    {file = "dependency_injector-4.31.2-cp27-cp27m-manylinux2010_i686.whl", hash = "sha256:517c520cb97f71b297ac8de2dc96c6efed774b33244c132c84cf976765b6d04f"},
+    {file = "dependency_injector-4.31.2-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:b3210666f13abfc03e90905c464705fd53a599b562a29f0c63ef7a31789eebbd"},
+    {file = "dependency_injector-4.31.2-cp27-cp27m-win32.whl", hash = "sha256:6ed30e084d90dd95f241a1e27ef864057b7577ee67ea822bd963d8dece741f0b"},
+    {file = "dependency_injector-4.31.2-cp27-cp27m-win_amd64.whl", hash = "sha256:7857fa0926d6430657d50d831589d0a06460502fb51d123f99314b538462a3e4"},
+    {file = "dependency_injector-4.31.2-cp27-cp27mu-manylinux1_i686.whl", hash = "sha256:8ae19a10eb98977965bf1b82b1d434a7247bb6064ee4551c52adee247897b10e"},
+    {file = "dependency_injector-4.31.2-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:97ad94831480d045cc5abe3bc073fe291a51fa354679a442469e15cc46132dd1"},
+    {file = "dependency_injector-4.31.2-cp27-cp27mu-manylinux2010_i686.whl", hash = "sha256:dc8759050904a9d5ab20f8a88f6ccd811f88641c7061483055355951a4bed02e"},
+    {file = "dependency_injector-4.31.2-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:94bf8eeab3d26d5d7ef82596d0c39f2d1d363ec800c4fbb498ebb2940a07e9bc"},
+    {file = "dependency_injector-4.31.2-cp35-cp35m-macosx_10_9_x86_64.whl", hash = "sha256:5db2aa3e8db6311f4ca2ec5010dacb19596f2ced1c2bf109d5d72c76a214f5b8"},
+    {file = "dependency_injector-4.31.2-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:70122713cc5c38f9a26d140f9e0878370215803ea9fd9e464accabd07e6564b9"},
+    {file = "dependency_injector-4.31.2-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:585b55f3e7f4a38415ee3f0edfedab9af589054fa3dabe255f31cd6a03ed0ab1"},
+    {file = "dependency_injector-4.31.2-cp35-cp35m-manylinux2010_i686.whl", hash = "sha256:5a104618385c3efe80588592fb024f94a3233836915714396639fac77c2e57bf"},
+    {file = "dependency_injector-4.31.2-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:4695e3962d61fed1803b7f9ec99865c3e2dc846ec0b0ef42b70e5c94338656ca"},
+    {file = "dependency_injector-4.31.2-cp35-cp35m-manylinux2014_aarch64.whl", hash = "sha256:86ff33f9aa34c7864d20909f643280ab23833c4a433cfa592e330c9c92264bce"},
+    {file = "dependency_injector-4.31.2-cp35-cp35m-win32.whl", hash = "sha256:bf5287f4fc8bd5347ca5cf77679e020f95ce1fea1070535ce5bc323d565007a0"},
+    {file = "dependency_injector-4.31.2-cp35-cp35m-win_amd64.whl", hash = "sha256:e149ee0d5cb4ad8d01b0104033a7b47a5a794cfa10ea1703f8511b587fd068d1"},
+    {file = "dependency_injector-4.31.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:b18fd6e4b00fff1892f86c674907460b8127d7a9fb85c0bfd6d8de777dab16f3"},
+    {file = "dependency_injector-4.31.2-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:b9d76b03b63d8de4d6fe06d0122fb2f6a8684ab0544df9cba6f921d6060f8ad7"},
+    {file = "dependency_injector-4.31.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:67f85c467320ae14a4acc3b9b3e74a3e5a0254500619c9c14f47f051e9190ab4"},
+    {file = "dependency_injector-4.31.2-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:e1ab334bb85337895603d0616b6f2ee00c7ed7a60fbbbb6026030673a97c83d4"},
+    {file = "dependency_injector-4.31.2-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:43481c0b35d0fa587589c41cf2a8827d574a709a76c32d1b486684a788ec9275"},
+    {file = "dependency_injector-4.31.2-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:7ca5b5c2289b83d81745dacede55167ed637dc970395d9ef3f1324e617496e90"},
+    {file = "dependency_injector-4.31.2-cp36-cp36m-win32.whl", hash = "sha256:c96d2a871c169bb2ccd0186ae75016abec65a856122b2bf042dc80da1d4fd72c"},
+    {file = "dependency_injector-4.31.2-cp36-cp36m-win_amd64.whl", hash = "sha256:de57bc63a9a817b454d2d85e5e628056f7f994d1f8568c170583c99edd5c6700"},
+    {file = "dependency_injector-4.31.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:3485f94328712a40d1fd32a816310ed515d3d1551aeb7e416968140485e4de46"},
+    {file = "dependency_injector-4.31.2-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:ad208e735e5fd98c10501ebc8a34aaef662bd7c6df28d99e5b41441cbf5517f3"},
+    {file = "dependency_injector-4.31.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:9f425d9cba6e6d8d8bc001d1c76d25f3ea8c7108afdad8a1117fc3e0a157c3fc"},
+    {file = "dependency_injector-4.31.2-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:016c114d1cd32bdc064072a77b40f1eeeec0e9a6318900c9e24b6f47e2a19bd2"},
+    {file = "dependency_injector-4.31.2-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:34eaf8ee417d627ba8561d47e486196c522191eafeab5ee87787a0235df920b9"},
+    {file = "dependency_injector-4.31.2-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:6bf65687dae3350c0fbe241349ffe94dd5e7ead0937c7571aa4c1a2cfdd65657"},
+    {file = "dependency_injector-4.31.2-cp37-cp37m-win32.whl", hash = "sha256:e5e73d62f96cf689931797d1eefc05c9ec20777954215bee320a91a50b9f9164"},
+    {file = "dependency_injector-4.31.2-cp37-cp37m-win_amd64.whl", hash = "sha256:743b3d7ac2ccb5a575ffb1d72c23c337c337f9f91b32b69403484e769bcb12a8"},
+    {file = "dependency_injector-4.31.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:9ff7c181f6c9e7baa47bb5ac508c25b6f16e9cb8309468c173317b0c9dda3b7a"},
+    {file = "dependency_injector-4.31.2-cp38-cp38-manylinux1_i686.whl", hash = "sha256:b82c180871aff5e6969780a2da9859f2d0dc32ade4af064c284bc4d5c0129b77"},
+    {file = "dependency_injector-4.31.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:acd41380bc571ae1e07aebefb46736cffceca00a31936ab14d75bd79bd5d1467"},
+    {file = "dependency_injector-4.31.2-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:a0dd318af961a64bfa76f3a5ae6f9a640d097b97c73ce6aa62130bacc21d9cbb"},
+    {file = "dependency_injector-4.31.2-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:566d6eef39c5ae5f0bbd446931b546629d414ef40380f597ac9f6b1c0dbf663c"},
+    {file = "dependency_injector-4.31.2-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:e8a9249565c4c1c45fb5fb4e659dd4e9fe7d9adb5912575361f56c1551ddc3db"},
+    {file = "dependency_injector-4.31.2-cp38-cp38-win32.whl", hash = "sha256:dd1cd27ba7c4ee4e162037e55d31905eea47aa8a9f3069918f5110912c25ee6c"},
+    {file = "dependency_injector-4.31.2-cp38-cp38-win_amd64.whl", hash = "sha256:671a3734f4cde9f07ff3b32fa95a6dcc825651ea6ce273c519d09184a6a38091"},
+    {file = "dependency_injector-4.31.2-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:a328955bd73104503511462f655ea67de7d7d1e73f2a17e641276f595c18e8b0"},
+    {file = "dependency_injector-4.31.2-cp39-cp39-manylinux1_i686.whl", hash = "sha256:5fbc25b2add5f771a6c4a0547a774a39c86734a7ca47f01337408e0688cedc79"},
+    {file = "dependency_injector-4.31.2-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:42aef049246766c62a44308dd9690f90521f336587c3758027ed3156f121c41e"},
+    {file = "dependency_injector-4.31.2-cp39-cp39-manylinux2010_i686.whl", hash = "sha256:8f0da2fee16071b8f3a9632028f6bc82e80463f023b46a504aa39b38a6fd2f7a"},
+    {file = "dependency_injector-4.31.2-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:99f77c3993707a8fb0a428ce07db723ba729672d81f4413b70ed37ade2ce9a68"},
+    {file = "dependency_injector-4.31.2-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:f6332c77af1ea4b7a8b9512d01aab2dfb961459f09ab9424a38094d47470741d"},
+    {file = "dependency_injector-4.31.2-cp39-cp39-win32.whl", hash = "sha256:0545ded2f6fc755da4e41c352446dc3a91c4a0a8cfe5ed04a02e559f41f1f1d9"},
+    {file = "dependency_injector-4.31.2-cp39-cp39-win_amd64.whl", hash = "sha256:59ca243dbf9999d8139fc61d2fa094bca6441a10b4875c5a1cae3ec965753d59"},
+    {file = "dependency_injector-4.31.2-pp27-pypy_73-macosx_10_9_x86_64.whl", hash = "sha256:83ccf8432163e20c447e21bf5667fcb8ec48a95e5705fac328ea6e9e3c3c24c4"},
+    {file = "dependency_injector-4.31.2-pp27-pypy_73-manylinux1_x86_64.whl", hash = "sha256:43a12cd796ce27a7aaf28d8864824fd8f94d5b3c8d0addc1fd63a00a06d0bcc1"},
+    {file = "dependency_injector-4.31.2-pp27-pypy_73-manylinux2010_x86_64.whl", hash = "sha256:3bbd1d1b71ac30b85c54bd6651bc521e58f6593581fb5d5d2f1898e2edd37440"},
+    {file = "dependency_injector-4.31.2-pp27-pypy_73-win32.whl", hash = "sha256:5db6a364ea70b4f770306c98443f62e43d6729c371f520a9c9864835e2bdc6f7"},
+    {file = "dependency_injector-4.31.2-pp36-pypy36_pp73-macosx_10_9_x86_64.whl", hash = "sha256:ef8b61caf844a6d5d283c3bba256d856021aa17ea0003d813d3c8e7ccf37cc95"},
+    {file = "dependency_injector-4.31.2-pp36-pypy36_pp73-manylinux1_x86_64.whl", hash = "sha256:3d8273ac9236a336740d2a2bdb1188e99f946824047c2730bf85e152212a99e6"},
+    {file = "dependency_injector-4.31.2-pp36-pypy36_pp73-manylinux2010_x86_64.whl", hash = "sha256:c5278d39fb8d96f0186eae0b30109a525e2e89ac9b69cb7392717190a669c4d3"},
+    {file = "dependency_injector-4.31.2-pp36-pypy36_pp73-win32.whl", hash = "sha256:f0026202c19ac59110472aa208aca0a212329b6231e76a073624edfe7257d608"},
+    {file = "dependency_injector-4.31.2-pp37-pypy37_pp73-macosx_10_9_x86_64.whl", hash = "sha256:b7ec1297d5a590c8d36e3669e0abd244610812274a613ec5f307caafefaa5d2a"},
+    {file = "dependency_injector-4.31.2-pp37-pypy37_pp73-manylinux1_x86_64.whl", hash = "sha256:d3c062b68d74890f51eb952b6da98898466bec64833ebe076c35185918938d86"},
+    {file = "dependency_injector-4.31.2-pp37-pypy37_pp73-manylinux2010_x86_64.whl", hash = "sha256:f71f287653151542fa7a290141511e23848d94649ad1413961a0627f671a3a72"},
+    {file = "dependency_injector-4.31.2-pp37-pypy37_pp73-win32.whl", hash = "sha256:3dcaf450dda1fc2ea0b28446ed9e508862417ed6e8f156301d2c0b870178e408"},
 ]
 flask = [
     {file = "Flask-1.1.2-py2.py3-none-any.whl", hash = "sha256:8a4fdd8936eba2512e9c85df320a37e694c93945b33ef33c89946a340a238557"},
@@ -802,6 +909,10 @@ pluggy = [
 py = [
     {file = "py-1.10.0-py2.py3-none-any.whl", hash = "sha256:3b80836aa6d1feeaa108e046da6423ab8f6ceda6468545ae8d02d9d58d18818a"},
     {file = "py-1.10.0.tar.gz", hash = "sha256:21b81bda15b66ef5e1a777a21c4dcd9c20ad3efd0b3f817e7a809035269e1bd3"},
+]
+pycodestyle = [
+    {file = "pycodestyle-2.7.0-py2.py3-none-any.whl", hash = "sha256:514f76d918fcc0b55c6680472f0a37970994e07bbb80725808c17089be302068"},
+    {file = "pycodestyle-2.7.0.tar.gz", hash = "sha256:c389c1d06bf7904078ca03399a4816f974a1d590090fecea0c63ec26ebaf1cef"},
 ]
 pylint = [
     {file = "pylint-2.7.2-py3-none-any.whl", hash = "sha256:d09b0b07ba06bcdff463958f53f23df25e740ecd81895f7d2699ec04bbd8dc3b"},

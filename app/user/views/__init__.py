@@ -8,8 +8,9 @@ from app.user.domain.register_form import RegisterForm
 from app import db
 from ..domain.user import User
 
-bp = Blueprint('user', __name__, 
-    template_folder='../templates', static_folder="../static", url_prefix='/user/')
+bp = Blueprint('user', __name__,
+               template_folder='../templates', static_folder="../static", url_prefix='/user/')
+
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -19,7 +20,7 @@ def login():
             raise InternalServerError('Invalid form')
         user = User.query.filter_by(
             username=request.form['username'], password=request.form['password']
-            ).first()
+        ).first()
         if user is None:
             raise InternalServerError('Login failed')
         login_user(user)
@@ -27,6 +28,7 @@ def login():
         next = request.args.get('next')
         return redirect(next or url_for('home'))
     return render_template('user/login.html')
+
 
 @bp.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -52,11 +54,13 @@ def logout():
     logout_user()
     flash('You were logged out.')
     return render_template('user/logged-out.html')
-    
+
+
 @bp.route('/my')
 @login_required
 def my():
     return render_template('user/my.html')
+
 
 @bp.route('/orders')
 @login_required

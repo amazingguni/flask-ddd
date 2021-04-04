@@ -1,33 +1,31 @@
 {% extends "base.html" %} 
 
-{% block title %} 주문 목록 {% endblock %}
+{% block title %} 주문 목록 {% endblock %} 
+
 {% block content %}
 <h2>주문 목록</h2>
-    {% if orders|length %}
-        <table class="table">
-            <thead>
-            <tr>
-                <th>주문번호</th>
-                <th>금액</th>
-                <th>상태</th>
-                <th>상품</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for order in orders %}
-            <tr>
-                <td><a href="/my/orders/{{order.number}}">{{order.number}}</a></td>
-                <td>{{order.totalAmounts}}</td>
-                <td>{{order.state}}</td>
-                <td>{{order.productName}} 등</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <div class="alert alert-info" role="alert">
-            주문 내역이 없습니다.
-        </div>
-    {% endif %}
-
+{% if orders|length %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>주문번호</th>
+      <th>금액</th>
+      <th>상태</th>
+      <th>상품</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td><a href="/my/orders/{{order.number}}">{{order.number}}</a></td>
+      <td>{{order.totalAmounts}}</td>
+      <td>{{order.state}}</td>
+      <td>{{order.productName}} 등</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="alert alert-info" role="alert">주문 내역이 없습니다.</div>
+{% endif %} 
 {% endblock %}
