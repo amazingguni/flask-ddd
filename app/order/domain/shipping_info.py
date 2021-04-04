@@ -73,6 +73,7 @@ class ShippingInfo(object):
 
     def __composite_values__(self):
         return \
-            self.address.__composite_values__() + self.receiver.__composite_values__(), \
-            self.message
+            self.address.__composite_values__() + \
+            self.receiver.__composite_values__() + \
+            (self.message,)
 

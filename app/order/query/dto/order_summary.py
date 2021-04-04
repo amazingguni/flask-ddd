@@ -1,21 +1,13 @@
-from sqlalchemy_utils import create_view
-from app import db
-from app.order.domain.order import Order
-from app.order.domain.order_line import OrderLine
-from app.catalog.domain.product import Product
+from dataclasses import dataclass
 
-class OrderSummary(db.Model):
-        __table__ = create_view(
-            name='order_summary',
-            selectable=db.select(
-                [
-                    Order.id,
-                    Order.orderer_id,
-                    Order.orderer_name,
-                ],
-                from_obj=(
-                    Order.__table__.join(OrderLine, Order.id == OrderLine.order_id)
-                )
-            ),
-            metadata=db.Model.metadata
-        )
+@dataclass
+class OrderSummary:
+    order_id: int
+    orderer_id: int
+    orderer_name:str
+    total_amounts:int
+    receiver_name:str
+    state:str
+    order_date:str
+    product_id:int
+    product_name:str
