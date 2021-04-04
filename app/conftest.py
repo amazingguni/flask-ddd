@@ -179,7 +179,19 @@ def pre_data_db_session(db_session):
     order2.order_lines.append(
         OrderLine(product=product1, price=1000, quantity=5, amounts=5000))
 
-    db_session.add_all([order1, order2])
+    shipping_info = ShippingInfo(
+        receiver=Receiver('사용자1', '010-1234-5678'),
+        address=Address('123456', '서울시', '관악구'),
+        message='메시지')
+    order3 = Order(
+        orderer=user2, shipping_info=shipping_info, 
+        total_amounts=5000, state=OrderState.SHIPPED,
+        order_date=datetime.fromisoformat('2016-01-03 09:00:00')
+        )
+    order3.order_lines.append(
+        OrderLine(product=product1, price=1000, quantity=5, amounts=5000))
+
+    db_session.add_all([order1, order2, order3])
     '''
     insert into article (title) values ('제목');
     insert into article_content values (1, 'content', 'type');

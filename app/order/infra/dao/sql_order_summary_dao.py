@@ -7,10 +7,17 @@ class SqlOrderSummaryDao(OrderSummaryDao):
     def __init__(self, session):
         self.session = session
         
-    def select_by_orderer(self, orderer_id):
-        orders = self.session.query(Order).filter(orderer_id==orderer_id).all()
+    def select_by_orderer(self, orderer_id:int):
+        orders = self.session.query(Order).filter(Order.orderer_id==orderer_id).all()
         return list(map(self._order_to_order_summary, orders))
-    
+
+    def counts(self, filters:dict):
+        query = self.session.query(Order)
+        if filters:
+            for attr,value in filters.items():
+                query = query.filter(getattr(Order,attr)==value )
+        return query.count()
+
     def _order_to_order_summary(self, order):
         return OrderSummary(
             order_id = order.id,
