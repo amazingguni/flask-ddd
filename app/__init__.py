@@ -44,7 +44,7 @@ def create_app(config_name):
     app.register_blueprint(admin_views.bp)
 
     from .containers import Container
-    container = Container(app=app, db=db)
+    container = Container(app=app, session=db.session)
     container.wire(modules=[admin_views])
 
     return app
