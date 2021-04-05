@@ -14,8 +14,8 @@ class SqlCategoryRepository(CategoryRepository):
         return self.session.query(Category).all()
 
     def find_by_id(self, id: int):
-        return self.session.query(Category).filter(id == id).first()
+        return self.session.query(Category).filter(Category.id == id).first()
 
-    def remove(self, category: Category):
-        self.session.delete(category)
+    def remove_by_id(self, id: int):
+        self.session.query(Category).filter(Category.id == id).delete()
         self.session.commit()

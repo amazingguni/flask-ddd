@@ -50,6 +50,5 @@ def add_category(category_repository: CategoryRepository = Provide[Container.cat
 @bp.route('/categories/<int:category_id>/remove', methods=('GET',))
 @inject
 def remove_category(category_id: int, category_repository: CategoryRepository = Provide[Container.category_repository]):
-    category = category_repository.find_by_id(category_id)
-    category_repository.remove(category)
+    category_repository.remove_by_id(category_id)
     return redirect(url_for('admin.categories'))

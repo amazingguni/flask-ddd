@@ -1,10 +1,10 @@
 import abc
-from .category import Category
+from .product import Product
 
 
-class CategoryRepository(abc.ABC):
+class ProductRepository(abc.ABC):
     @abc.abstractmethod
-    def save(self, category: Category):
+    def save(self, product: Product):
         raise NotImplementedError
 
     @abc.abstractmethod

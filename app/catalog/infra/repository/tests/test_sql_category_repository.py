@@ -11,7 +11,7 @@ def test_save(db_session):
     assert db_session.query(Category).first().name == '제과'
 
 
-def test_remove(db_session):
+def test_remove_by_id(db_session):
     # Given
     category = Category(name='제과')
     db_session.add(category)
@@ -19,7 +19,7 @@ def test_remove(db_session):
     assert db_session.query(Category).count() == 1
 
     # When
-    SqlCategoryRepository(db_session).remove(category)
+    SqlCategoryRepository(db_session).remove_by_id(category.id)
 
     # Then
     assert db_session.query(Category).count() == 0
@@ -27,7 +27,7 @@ def test_remove(db_session):
 
 def test_find_all(db_session):
     # Given
-    for i in range(1, 5):
+    for i in range(1, 6):
         db_session.add(Category(name=f'제과 {i}'))
     db_session.commit()
 
@@ -38,15 +38,15 @@ def test_find_all(db_session):
     assert len(result) == 5
 
 
-def test_find_all(db_session):
+def test_find_by_id(db_session):
     # Given
-    for i in range(1, 5):
+    for i in range(1, 6):
         db_session.add(Category(name=f'제과 {i}'))
     db_session.commit()
 
     # When
-    result = SqlCategoryRepository(db_session).find_by_id(1)
+    result = SqlCategoryRepository(db_session).find_by_id(2)
 
     # Then
-    assert result.id == 1
-    assert result.name == '제과 1'
+    assert result.id == 2
+    assert result.name == '제과 2'
