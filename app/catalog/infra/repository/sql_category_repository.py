@@ -18,3 +18,4 @@ class SqlCategoryRepository(CategoryRepository):
 
     def remove(self, category: Category):
         self.session.delete(category)
+        self.session.commit()

@@ -9,6 +9,8 @@ from flask_login import LoginManager
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+
+
 migrate = Migrate(db=db)
 
 
@@ -22,32 +24,34 @@ def create_app(config_name):
     db.init_app(app)
     migrate.init_app(app)
     login_manager.init_app(app)
-    # TODO: I don't know how it works
-    app.app_context().push()
-    from .user.domain.user import User
-
-    @login_manager.user_loader
-    # pylint: disable=unused-variable
-    def load_user(user_id):
-        return User.query.filter(User.id == user_id).first()
 
     @app.route('/')
     # pylint: disable=unused-variable
     def home():
         return render_template('home.html')
 
-    # Blueprints
     from .user import views as user_views
     from .catalog import views as catalog_views
     from .admin import views as admin_views
 
-    app.register_blueprint(user_views.bp)
-    app.register_blueprint(catalog_views.bp)
-    app.register_blueprint(admin_views.bp)
+    views = [user_views, catalog_views, admin_views]
+    register_blueprints(app, views)
 
     from .containers import Container
     container = Container(app=app, session=db.session)
     app.container = container
-    container.wire(modules=[user_views, catalog_views, admin_views])
+    with app.app_context():
+        container.wire(modules=views)
 
     return app
+
+
+def register_blueprints(app, views):
+    for view in views:
+        app.register_blueprint(view.bp)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    from .user.domain.user import User
+    return User.query.filter(User.id == user_id).first()

@@ -15,7 +15,7 @@ bp = Blueprint('admin', __name__,
 
 @bp.route('/', methods=('GET',))
 def index():
-    return render_template('admin/index.html')
+    return render_template('admin/index.html.j2')
 
 
 @bp.route('/orders', methods=('GET',))
@@ -24,14 +24,14 @@ def orders(order_view_list_service: OrderViewListService = Provide[Container.ord
     size = 20
     request = ListRequest(0, 10)
     order_page = order_view_list_service.get_list(request)
-    return render_template('admin/orders.html', order_page=order_page)
+    return render_template('admin/orders.html.j2', order_page=order_page)
 
 
 @bp.route('/categories', methods=('GET',))
 @inject
 def categories(category_repository: CategoryRepository = Provide[Container.category_repository]):
     _categories = category_repository.find_all()
-    return render_template('admin/categories.html', categories=_categories)
+    return render_template('admin/categories.html.j2', categories=_categories)
 
 
 @bp.route('/categories/add', methods=('GET', 'POST',))
@@ -44,4 +44,12 @@ def add_category(category_repository: CategoryRepository = Provide[Container.cat
         category = Category(name=request.form['name'])
         category_repository.save(category)
         return redirect(url_for('admin.categories'))
-    return render_template('admin/add_category.html')
+    return render_template('admin/add_category.html.j2')
+
+
+@bp.route('/categories/<int:category_id>/remove', methods=('GET',))
+@inject
+def remove_category(category_id: int, category_repository: CategoryRepository = Provide[Container.category_repository]):
+    category = category_repository.find_by_id(category_id)
+    category_repository.remove(category)
+    return redirect(url_for('admin.categories'))
