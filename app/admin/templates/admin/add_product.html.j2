@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+
+{% block title %} 관리자 : 제품 추가 {% endblock %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('admin.index') }}">관리자</a></li>
+    <li class="active"><a href="{{ url_for('admin.products') }}">제품 관리</a></li>
+</ol>
+<form method="post" class="form" role="form">
+  {{ form.csrf_token }}
+  <div class="form-group">
+    <label class="control-label" for="name">제품명</label>
+    <input class="form-control" name="name" type="text">
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="price">가격</label>
+    <input class="form-control" name="price" type="number" text="0">
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="detail">설명</label>
+    <input class="form-control" name="detail" type="text">
+  </div>
+  <button type="submit" class="btn btn-primary">제품 추가하기</button>
+</form>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %} 
+
+{% block title %} 관리자 : 제품 목록 {% endblock %}
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('admin.index') }}">관리자</a></li>
+    <li class="active"><a href="{{ url_for('admin.products') }}">제품 관리</a></li>
+</ol>
+<h2>제품 목록</h2>
+<p>
+    <a href="{{ url_for('admin.add_product') }}" class="btn btn-primary" role="button">추가하기</a>
+</p>
+{% if products|length %}
+ <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제품명</th>
+        <th>가격</th>
+        <th>설명</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name}}</td>
+            <td>{{ product.price}}</td>
+            <td>{{ product.detail}}</td>
+            <td>
+                <a href="{{ url_for('admin.remove_product', product_id=product.id) }}" 
+                    class="btn btn-danger" role="button">삭제</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        제품이 없습니다.
+    </div>
+{% endif %}
+    
+{% endblock %}
