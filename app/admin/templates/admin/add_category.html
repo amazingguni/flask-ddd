@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+
+{% block title %} 관리자 : 카테고리 추가 {% endblock %}
+
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('admin.index') }}">관리자</a></li>
+    <li class="active"><a href="{{ url_for('admin.categories') }}">카테고리 관리</a></li>
+</ol>
+<form method="post">
+  <div class="form-group">
+    <label for="name">이름</label>
+    <input type="text" class="form-control" name="name" placeholder="name">
+  </div>
+  <button type="submit" class="btn btn-primary">카테고리 추가하기</button>
+</form>
+{% endblock %}

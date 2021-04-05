@@ -22,7 +22,8 @@ def create_app(config_name):
     db.init_app(app)
     migrate.init_app(app)
     login_manager.init_app(app)
-
+    # TODO: I don't know how it works
+    app.app_context().push()
     from .user.domain.user import User
 
     @login_manager.user_loader
@@ -36,15 +37,17 @@ def create_app(config_name):
         return render_template('home.html')
 
     # Blueprints
-    from .user.views import bp as user_bp
-    app.register_blueprint(user_bp)
-    from .catalog.views import bp as catalog_bp
-    app.register_blueprint(catalog_bp)
+    from .user import views as user_views
+    from .catalog import views as catalog_views
     from .admin import views as admin_views
+
+    app.register_blueprint(user_views.bp)
+    app.register_blueprint(catalog_views.bp)
     app.register_blueprint(admin_views.bp)
 
     from .containers import Container
     container = Container(app=app, session=db.session)
-    container.wire(modules=[admin_views])
+    app.container = container
+    container.wire(modules=[user_views, catalog_views, admin_views])
 
     return app

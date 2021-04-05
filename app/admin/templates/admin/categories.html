@@ -1,0 +1,36 @@
+{% extends "base.html" %} 
+
+{% block title %} 관리자 : 카테고리 목록 {% endblock %}
+{% block content %}
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('admin.index') }}">관리자</a></li>
+    <li class="active"><a href="{{ url_for('admin.categories') }}">카테고리 관리</a></li>
+</ol>
+<h2>카테고리 목록</h2>
+<p>
+    <a href="{{ url_for('admin.add_category') }}" class="btn btn-primary" role="button">추가하기</a>
+</p>
+{% if categories|length %}
+ <table class="table">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>이름</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td><a href="/admin/categories/${category.id}">{{category.name}}</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        카테고리가 없습니다.
+    </div>
+{% endif %}
+    
+{% endblock %}

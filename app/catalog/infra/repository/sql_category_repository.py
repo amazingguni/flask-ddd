@@ -8,6 +8,7 @@ class SqlCategoryRepository(CategoryRepository):
 
     def save(self, category: Category):
         self.session.add(category)
+        self.session.commit()
 
     def find_all(self):
         return self.session.query(Category).all()
