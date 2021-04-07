@@ -25,7 +25,11 @@
     {% for product in products %}
         <tr>
             <td>{{ product.id }}</td>
-            <td>{{ product.name}}</td>
+            <td>{{ product.name}} 
+                {% for category in product.categories %}
+                <span class="badge bg-secondary">{{ category.name}} </span>
+                {% endfor %}
+            </td>
             <td>{{ product.price}}</td>
             <td>{{ product.detail}}</td>
             <td>

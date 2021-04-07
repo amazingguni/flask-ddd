@@ -66,22 +66,30 @@ def products(product_repository: ProductRepository = Provide[Container.product_r
 
 @bp.route('/products/add', methods=('GET', 'POST',))
 @inject
-def add_product(product_repository: ProductRepository = Provide[Container.product_repository]):
+def add_product(
+        product_repository: ProductRepository = Provide[Container.product_repository],
+        category_repository: CategoryRepository = Provide[Container.category_repository]):
     form = ProductForm()
     if request.method == 'POST':
         if not form.validate_on_submit():
             raise InternalServerError('Invalid form')
+
         product = Product(
             name=request.form['name'],
             price=request.form['price'],
-            detail=request.form['detail'])
+            detail=request.form['detail'],
+        )
+        for category_id in request.form.getlist('categories'):
+            product.categories.append(
+                category_repository.find_by_id(category_id))
         product_repository.save(product)
         return redirect(url_for('admin.products'))
-    return render_template('admin/add_product.html.j2', form=form)
+    _categories = category_repository.find_all()
+    return render_template('admin/add_product.html.j2', form=form, categories=_categories)
 
 
-@bp.route('/products/<int:product_id>/remove', methods=('GET',))
-@inject
+@ bp.route('/products/<int:product_id>/remove', methods=('GET',))
+@ inject
 def remove_product(product_id: int, product_repository: ProductRepository = Provide[Container.product_repository]):
     product_repository.remove_by_id(product_id)
     return redirect(url_for('admin.products'))
