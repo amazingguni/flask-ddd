@@ -1,5 +1,6 @@
 from ...domain.product_repository import ProductRepository
 from ...domain.product import Product
+from ...domain.category import Category
 
 
 class SqlProductRepository(ProductRepository):
@@ -19,3 +20,11 @@ class SqlProductRepository(ProductRepository):
     def remove_by_id(self, id: int):
         self.session.query(Product).filter(Product.id == id).delete()
         self.session.commit()
+
+    def find_by_category(self, category: Category, offset: int, limit: int):
+        return self.session.query(Product).join(Product.categories).filter(
+            Category.id == category.id).offset(offset).limit(limit).all()
+
+    def counts_by_category(self, category: Category):
+        return self.session.query(Product).join(Product.categories).filter(
+            Category.id == category.id).count()

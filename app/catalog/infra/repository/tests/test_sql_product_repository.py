@@ -23,8 +23,8 @@ def test_save_with_categories(db_session):
     result_product = db_session.query(Product).first()
     assert result_product.name == '꼬북칩'
     assert len(result_product.categories) == 2
-    assert result_product.categories[0].name == '제과'
-    assert result_product.categories[1].name == '어린이'
+    assert set([category.name for category in result_product.categories]) == \
+        set(['제과', '어린이'])
 
 
 def test_remove_by_id(db_session):
@@ -68,3 +68,38 @@ def test_find_by_id(db_session):
     # Then
     assert result.id == 2
     assert result.name == '꼬북칩 2'
+
+
+def test_find_by_category(pre_data_db_session):
+    repository = SqlProductRepository(pre_data_db_session)
+    category_1 = pre_data_db_session.query(
+        Category).filter(Category.name == '전자제품').first()
+    category_2 = pre_data_db_session.query(
+        Category).filter(Category.name == '필기구').first()
+    # When
+    category_1_products = repository.find_by_category(category_1, 0, 10)
+    category_2_products = repository.find_by_category(category_2, 0, 10)
+
+    # Then
+    assert len(category_1_products) == 2
+    assert len(category_2_products) == 2
+
+
+def test_counts_by_category(db_session):
+    repository = SqlProductRepository(db_session)
+    category_1 = Category(name='제과')
+    category_2 = Category(name='아동')
+    db_session.add_all([category_1, category_2])
+    db_session.commit()
+
+    for i in range(1, 6):
+        db_session.add(
+            Product(name=f'꼬북칩 {i}', price=1000, detail='바삭하고 맛이 있지요', categories=[category_1, category_2]))
+
+    for i in range(1, 21):
+        db_session.add(
+            Product(name=f'장난감 {i}', price=2000, detail='재미있지요', categories=[category_2]))
+
+    # When
+    assert repository.counts_by_category(category_1) == 5
+    assert repository.counts_by_category(category_2) == 25

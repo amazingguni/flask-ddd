@@ -179,3 +179,21 @@ def pre_data_db_session(db_session):
 
     db_session.add_all([order1, order2, order3])
     return db_session
+
+
+@pytest.fixture(scope='function')
+def order_summary_dao(db_session):
+    from app.order.infra.dao.sql_order_summary_dao import SqlOrderSummaryDao
+    return SqlOrderSummaryDao(db_session)
+
+
+@pytest.fixture(scope='function')
+def category_repository(db_session):
+    from app.catalog.infra.repository.sql_category_repository import SqlCategoryRepository
+    return SqlCategoryRepository(db_session)
+
+
+@pytest.fixture(scope='function')
+def product_repository(db_session):
+    from app.catalog.infra.repository.sql_product_repository import SqlProductRepository
+    return SqlProductRepository(db_session)

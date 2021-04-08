@@ -19,8 +19,3 @@ def order(db_session, orderer):
     db_session.add(_order)
     db_session.commit()
     return _order
-
-
-@pytest.fixture(scope='function')
-def sql_order_summary_dao(pre_data_db_session):
-    return SqlOrderSummaryDao(pre_data_db_session)

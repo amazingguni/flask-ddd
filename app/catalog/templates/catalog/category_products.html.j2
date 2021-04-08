@@ -1,0 +1,14 @@
+{% extends "base.html" %} 
+
+{% block title %} 제품 목록 {% endblock %} 
+
+{% block content %}
+<h3>제품 목록</h3>
+{% if products|length %}
+
+{% else %}
+    <div class="alert alert-info" role="alert">
+        제품이 없습니다.
+    </div>
+{% endif %}
+{% endblock %}

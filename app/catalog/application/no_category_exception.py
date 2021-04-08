@@ -1,0 +1,2 @@
+class NoCategoryException(Exception):
+    pass
