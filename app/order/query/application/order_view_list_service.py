@@ -1,4 +1,4 @@
-from app.common.model.page import Page
+from .order_page import OrderPage
 
 from .list_request import ListRequest
 
@@ -11,4 +11,4 @@ class OrderViewListService:
         offset = (request.page - 1) * request.size
         orders = self.order_summary_dao.select(None, offset, request.size)
         count = self.order_summary_dao.counts(None)
-        return Page(orders, request.page, request.size, count)
+        return OrderPage(orders, request.page, request.size, count)

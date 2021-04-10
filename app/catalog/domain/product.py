@@ -18,3 +18,4 @@ class Product(db.Model):
     categories = relationship(
         Category, secondary=category_products, backref='products')
     detail = db.Column(db.String())
+    image_url = db.Column(db.String())

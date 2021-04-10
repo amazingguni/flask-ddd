@@ -1,0 +1,48 @@
+{% extends "base.html" %} 
+
+{% block title %} 제품 상세 {% endblock %} 
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ product.image_url }}" class="img-responsive">
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ product.name }}</div>
+            <div class="panel-body">
+                가격 : {{ product.price }}
+                <br>
+                상세 : {{ product.detail }}
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary btn-lg" id="orderBtn">구매하기</button>
+        </div>
+    </div>
+</div>
+
+<form id="goConfirmForm" action="{{ url_for('order.add') }}" method="post">
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    <input type="hidden" name="quantity" value="1">
+</form>
+
+<script>
+    $(function() {
+        $("#orderBtn").click(function() {
+            handleOrder();
+        });
+    });
+    {% if current_user.is_authenticated %} 
+    function handleOrder() {
+        alert("주문 확인 화면으로 넘어갑니다.");
+        $("#goConfirmForm").submit();
+    }
+    
+    {% else %}
+    function handleOrder() {
+        alert("로그인을 먼저 하세요!");
+    }
+    {% endif %}
+</script>
+{% endblock %}

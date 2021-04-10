@@ -1,3 +1,4 @@
+from flask import template_rendered
 from datetime import datetime
 import pytest
 import sqlalchemy as sa
@@ -28,7 +29,24 @@ def app(request):
 
 @pytest.fixture
 def client(app):
-    return app.test_client()
+    ctx = app.test_request_context()
+    ctx.push()
+    yield app.test_client()
+    ctx.pop()
+
+
+@pytest.fixture
+def captured_templates(app):
+    recorded = []
+
+    def record(sender, template, context, **extra):
+        recorded.append((template, context))
+
+    template_rendered.connect(record, app)
+    try:
+        yield recorded
+    finally:
+        template_rendered.disconnect(record, app)
 
 
 @pytest.fixture(scope='function')

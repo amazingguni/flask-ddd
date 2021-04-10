@@ -77,6 +77,7 @@ def add_product(
         product = Product(
             name=request.form['name'],
             price=request.form['price'],
+            image_url=request.form['image_url'],
             detail=request.form['detail'],
         )
         for category_id in request.form.getlist('categories'):

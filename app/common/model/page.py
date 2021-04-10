@@ -1,13 +1,11 @@
 
 class Page:
-    items: list
     page: int
     size: int
     total_count: int
     total_pages: int
 
-    def __init__(self, items: list, page: int, size: int, total_count: int):
-        self.items = items
+    def __init__(self, page: int, size: int, total_count: int):
         self.page = page
         self.size = size
         self.total_count = total_count

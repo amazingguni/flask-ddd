@@ -1,6 +1,7 @@
 
 from app.common.model.page import Page
 from .no_category_exception import NoCategoryException
+from .category_product_page import CategoryProductPage
 
 
 class ProductService:
@@ -16,5 +17,5 @@ class ProductService:
         limit = size
         products = self.product_repository.find_by_category(
             category, offset, limit)
-        total_count = self.product_repository.count_by_category(category)
+        total_count = self.product_repository.counts_by_category(category)
         return CategoryProductPage(category, products, page, size, total_count)

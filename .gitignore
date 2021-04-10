@@ -133,3 +133,4 @@ dmypy.json
 
 # db.sqlite
 db.sqlite
+test.db.sqlite

@@ -3,9 +3,22 @@
 {% block title %} 제품 목록 {% endblock %} 
 
 {% block content %}
-<h3>제품 목록</h3>
-{% if products|length %}
-
+<h2>{{ category_product_page.category.name }}</h2>
+{% if category_product_page.products |length %}
+  {% for product in category_product_page.products %}
+    <div class="media">
+      <div class="media-left">
+        <a href="{{ url_for('catalog.product_detail', product_id=product.id) }}">
+          <img class="media-object" style="width: 64px; height: 64px;" 
+          src="{{ product.image_url }}" alt="{{ product.name }}">
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">{{ product.name }}</h4>
+        가격 : {{ product.price }}
+      </div>
+    </div>
+  {% endfor %}
 {% else %}
     <div class="alert alert-info" role="alert">
         제품이 없습니다.

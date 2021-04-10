@@ -14,11 +14,11 @@ login_manager = LoginManager()
 migrate = Migrate(db=db)
 
 
-def create_app(config_name):
+def create_app(config_name='config.development.DevelopmentConfig'):
     # create and configure the app
     app = Flask(__name__)
     app.config.from_object(
-        os.environ.get('APP_SETTINGS', 'config.development.DevelopmentConfig'))
+        os.environ.get('APP_SETTINGS', config_name))
     CORS(app)
 
     db.init_app(app)
@@ -33,8 +33,9 @@ def create_app(config_name):
     from .user import views as user_views
     from .catalog import views as catalog_views
     from .admin import views as admin_views
+    from .order import views as order_views
 
-    views = [user_views, catalog_views, admin_views]
+    views = [user_views, catalog_views, admin_views, order_views]
     register_blueprints(app, views)
 
     from .containers import Container
