@@ -22,11 +22,6 @@
     </div>
 </div>
 
-<form id="goConfirmForm" action="{{ url_for('order.add') }}" method="post">
-    <input type="hidden" name="product_id" value="{{ product.id }}">
-    <input type="hidden" name="quantity" value="1">
-</form>
-
 <script>
     $(function() {
         $("#orderBtn").click(function() {
@@ -36,7 +31,8 @@
     {% if current_user.is_authenticated %} 
     function handleOrder() {
         alert("주문 확인 화면으로 넘어갑니다.");
-        $("#goConfirmForm").submit();
+        location.href = '{{ url_for('order.confirm', product_id=product.id, quantity=1)}}'
+
     }
     
     {% else %}

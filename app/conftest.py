@@ -129,6 +129,19 @@ def db_session(_session, _transaction):
 
 
 @pytest.fixture(scope='function')
+def loginned_user(app, db_session):
+    user = User(username='사용자1', password='1234',
+                blocked=False, is_admin=False)
+    db_session.add(user)
+    db_session.commit()
+
+    @app.login_manager.request_loader
+    def load_user_from_request(request):
+        return user
+    return user
+
+
+@pytest.fixture(scope='function')
 def pre_data_db_session(db_session):
     user1 = User(username='사용자1', password='1234',
                  blocked=False, is_admin=False)

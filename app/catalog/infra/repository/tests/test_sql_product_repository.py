@@ -64,7 +64,6 @@ def test_find_by_id(db_session):
 
     # When
     result = SqlProductRepository(db_session).find_by_id(2)
-    print(result)
     # Then
     assert result.id == 2
     assert result.name == '꼬북칩 2'
