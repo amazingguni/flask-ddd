@@ -1,5 +1,4 @@
-
-
+import pytest
 from flask import url_for
 
 from app.user.domain.user import User
@@ -27,5 +26,7 @@ def test_confirm(db_session, client, captured_templates, loginned_user):
     assert context['order_products'][0].product_id == product.id
 
 
-def test_confirm_invalid_product_id():
-    pass
+def test_confirm_invalid_product_id(db_session, client):
+    response = client.get(
+        url_for('order.confirm', quantity=1, product_id='invalid'))
+    assert response.status_code == 500

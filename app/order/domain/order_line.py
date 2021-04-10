@@ -11,6 +11,8 @@ class OrderLine(db.Model):
         'product.id'), nullable=False)
     product = relationship(
         Product, backref=backref('order_line_set', lazy=True))
-    price = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
-    amounts = db.Column(db.Integer)
+
+    @property
+    def amounts(self):
+        return self.product.price * self.quantity
