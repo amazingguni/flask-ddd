@@ -13,6 +13,5 @@ class OrderLine(db.Model):
         Product, backref=backref('order_line_set', lazy=True))
     quantity = db.Column(db.Integer)
 
-    @property
-    def amounts(self):
+    def get_amounts(self):
         return self.product.price * self.quantity

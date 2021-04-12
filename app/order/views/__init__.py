@@ -1,5 +1,7 @@
+
 from dependency_injector.wiring import inject, Provide
 
+from werkzeug.exceptions import InternalServerError
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import login_required, current_user
 
@@ -7,7 +9,12 @@ from app.containers import Container
 
 
 from app.catalog.domain.product_repository import ProductRepository
+
+from ..domain.order import Order
+from ..domain.shipping_info import ShippingInfo, Receiver, Address
+from ..domain.order_line import OrderLine
 from ..application.order_product import OrderProduct
+from ..application.order_request import OrderRequest
 from .no_order_product_error import NoOrderProductError
 
 bp = Blueprint('order', __name__,
@@ -19,8 +26,12 @@ bp = Blueprint('order', __name__,
 @inject
 def confirm(product_repository: ProductRepository = Provide[Container.product_repository]):
     order_products = []
-    product_id = int(request.args.get('product_id'))
-    quantity = int(request.args.get('quantity'))
+    try:
+        product_id = int(request.args.get('product_id'))
+        quantity = int(request.args.get('quantity'))
+    except ValueError as e:
+        raise InternalServerError('Invalid Value: ' + str(e))
+
     if product_id and quantity:
         order_products.append(OrderProduct(
             product_id=product_id, quantity=quantity))
@@ -41,3 +52,46 @@ def get_products(order_products, product_repository: ProductRepository = Provide
         product = product_repository.find_by_id(order_product.product_id)
         result.append(product)
     return result
+
+
+@login_required
+@bp.route('/place', methods=['POST', ])
+def place():
+    order_products = extract_order_products(request)
+    shipping_info = extract_shipping_info(request)
+    order_request = OrderRequest(order_products=order_products, orderer=current_user,
+                                 shipping_info=shipping_info)
+
+    return redirect(url_for('order.complete', order_id=order.id))
+
+
+def extract_order_products(request):
+    result = []
+    i = 0
+    while True:
+        product_id = request.form.get(f'order_products[{i}].product_id')
+        quantity = request.form.get(f'order_products[{i}].quantity')
+        if not product_id or not quantity:
+            break
+        result.append(OrderProduct(product_id=int(
+            product_id), quantity=int(quantity)))
+        i += 1
+    return result
+
+
+def extract_shipping_info(request):
+    receiver_name = request.form.get('shipping_info.receiver.name')
+    receiver_phone = request.form.get('shipping_info.receiver.phone')
+    receiver = Receiver(name=receiver_name, phone=receiver_phone)
+    zip_code = request.form.get('shipping_info.address.zip_code')
+    address1 = request.form.get('shipping_info.address.address1')
+    address2 = request.form.get('shipping_info.address.address2')
+    address = Address(zip_code=zip_code, address1=address1, address2=address2)
+    message = request.form.get('shipping_info.message')
+    return ShippingInfo(receiver=receiver, address=address, message=message)
+
+
+# @login_required
+# @bp.route('/<int:order_id>/complete/', methods=['GET, '])
+# def complete(order_id: int):
+#     return render_template('order/coplete.html.j2')

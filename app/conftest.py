@@ -180,9 +180,9 @@ def pre_data_db_session(db_session):
         order_date=datetime.fromisoformat('2016-01-01 15:30:00')
     )
     order1.order_lines.append(
-        OrderLine(product=product1, price=1000, quantity=2, amounts=2000))
+        OrderLine(product=product1, quantity=2))
     order1.order_lines.append(
-        OrderLine(product=product2, price=2000, quantity=1, amounts=2000))
+        OrderLine(product=product2, quantity=1))
 
     shipping_info = ShippingInfo(
         receiver=Receiver('사용자1', '010-1234-5678'),
@@ -194,7 +194,7 @@ def pre_data_db_session(db_session):
         order_date=datetime.fromisoformat('2016-01-02 09:18:21')
     )
     order2.order_lines.append(
-        OrderLine(product=product1, price=1000, quantity=5, amounts=5000))
+        OrderLine(product=product1, quantity=5))
 
     shipping_info = ShippingInfo(
         receiver=Receiver('사용자1', '010-1234-5678'),
@@ -206,7 +206,7 @@ def pre_data_db_session(db_session):
         order_date=datetime.fromisoformat('2016-01-03 09:00:00')
     )
     order3.order_lines.append(
-        OrderLine(product=product1, price=1000, quantity=5, amounts=5000))
+        OrderLine(product=product1, quantity=5))
 
     db_session.add_all([order1, order2, order3])
     return db_session

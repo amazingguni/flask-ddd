@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <form cssClass="form-horizontal" action="/orders/order">
+    <form cssClass="form-horizontal" method="post" action="{{ url_for('order.place') }}">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">주문자</h3>
@@ -38,10 +38,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="shipping_info.address.zipCode" class="col-sm-2 control-label">우편번호
+                    <label for="shipping_info.address.zip_code" class="col-sm-2 control-label">우편번호
                         <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></label>
                     <div class="col-sm-10">
-                        <input name="shipping_info.address.zipCode" cssClass="form-control"  />
+                        <input name="shipping_info.address.zip_code" cssClass="form-control"  />
                     </div>
                 </div>
                 <div class="form-group">
@@ -77,17 +77,19 @@
                     </thead>
                     <tbody>
                     {% for order_product in order_products %}
-                        {% set product = products[loop.index-1] %}
+                        {% set product = products[loop.index - 1] %}
                         <tr>
                             <td>{{ product.name }}</td>
                             <td>{{ product.price }}</td>
                             <td>{{ order_product.quantity }}</td>
-                                {# <input type="hidden" name="order_products[loop.index].product_id" value="order_product" />
-                                <input type="hidden" name="order_products[loop.index].product_id" /> #}
-                                {# <form:hidden path="orderProducts[${status.index}].quantity" /> #}
+                                <input type="hidden" 
+                                    name="order_products[{{ loop.index - 1 }}].product_id" 
+                                    value="{{ product.id }}" /> 
+                                <input type="hidden" 
+                                    name="order_products[{{ loop.index - 1 }}].quantity" 
+                                    value="{{ order_product.quantity }}" />
                             </td>
                             <td>{{ product.price * order_product.quantity }}</td>
-                            
                         </tr>
                     {% endfor %}
                     </tbody> 

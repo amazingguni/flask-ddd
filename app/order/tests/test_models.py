@@ -25,7 +25,6 @@ def test_order(db_session, orderer):
 def test_order_line_model(db_session, order):
     order_line = OrderLine(
         product_id='PRODUCT_1',
-        price='100',
         quantity='4',
     )
     order_line.order = order
