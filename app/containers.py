@@ -8,7 +8,9 @@ from .catalog.infra.repository.sql_category_repository import SqlCategoryReposit
 from .catalog.infra.repository.sql_product_repository import SqlProductRepository
 from .catalog.application.product_service import ProductService
 from .order.infra.dao.sql_order_summary_dao import SqlOrderSummaryDao
+from .order.infra.repository.sql_order_repository import SqlOrderRepository
 from .order.query.application.order_view_list_service import OrderViewListService
+from .order.application.place_order_service import PlaceOrderService
 
 # https://github.com/ets-labs/python-dependency-injector/issues/344
 
@@ -17,6 +19,7 @@ class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
     app = providers.Dependency(instance_of=Flask)
     session = providers.Dependency(instance_of=scoped_session)
+
     category_repository = providers.Factory(
         SqlCategoryRepository, session=session)
     product_repository = providers.Factory(
@@ -26,3 +29,8 @@ class Container(containers.DeclarativeContainer):
     order_summary_dao = providers.Factory(SqlOrderSummaryDao, session=session)
     order_view_list_service = providers.Factory(
         OrderViewListService, order_summary_dao=order_summary_dao)
+    order_repository = providers.Factory(
+        SqlOrderRepository, session=session)
+    place_order_service = providers.Factory(
+        PlaceOrderService, product_repository=product_repository, order_repository=order_repository
+    )

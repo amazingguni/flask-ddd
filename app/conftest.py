@@ -228,3 +228,9 @@ def category_repository(db_session):
 def product_repository(db_session):
     from app.catalog.infra.repository.sql_product_repository import SqlProductRepository
     return SqlProductRepository(db_session)
+
+
+@pytest.fixture(scope='function')
+def order_repository(db_session):
+    from app.order.infra.repository.sql_order_repository import SqlOrderRepository
+    return SqlOrderRepository(db_session)

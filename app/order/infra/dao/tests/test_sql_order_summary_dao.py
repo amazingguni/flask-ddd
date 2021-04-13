@@ -29,7 +29,7 @@ def test_select_by_filter(pre_data_db_session, order_summary_dao):
     assert len(order_summary_dao.select({'orderer_id': 2}, 0, 10)) == 1
 
 
-def test_select_by_filter_limited_test(db_session, order_summary_dao, orderer):
+def test_select_by_filter_limited_test(db_session, order_summary_dao, loginned_user):
     # Given
     shipping_info = ShippingInfo(
         receiver=Receiver('사용자1', '010-1234-5678'),
@@ -37,14 +37,14 @@ def test_select_by_filter_limited_test(db_session, order_summary_dao, orderer):
         message='메시지')
     for _ in range(15):
         db_session.add(Order(
-            orderer=orderer, shipping_info=shipping_info,
+            orderer=loginned_user, shipping_info=shipping_info,
             total_amounts=1000, state=OrderState.PREPARING
         ))
     db_session.commit()
 
     # When, Then
     filter = {
-        'orderer_id': orderer.id
+        'orderer_id': loginned_user.id
     }
     assert len(order_summary_dao.select(filter, 0, 10)) == 10
     assert len(order_summary_dao.select(filter, 0, 5)) == 5

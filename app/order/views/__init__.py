@@ -15,7 +15,8 @@ from ..domain.shipping_info import ShippingInfo, Receiver, Address
 from ..domain.order_line import OrderLine
 from ..application.order_product import OrderProduct
 from ..application.order_request import OrderRequest
-from .no_order_product_error import NoOrderProductError
+from ..application.exceptions import NoOrderProductException
+from ..application.place_order_service import PlaceOrderService
 
 bp = Blueprint('order', __name__,
                template_folder='../templates', static_folder="../static", url_prefix='/order/')
@@ -56,12 +57,13 @@ def get_products(order_products, product_repository: ProductRepository = Provide
 
 @login_required
 @bp.route('/place', methods=['POST', ])
-def place():
+@inject
+def place(place_order_service: PlaceOrderService = Provide[Container.place_order_service]):
     order_products = extract_order_products(request)
     shipping_info = extract_shipping_info(request)
     order_request = OrderRequest(order_products=order_products, orderer=current_user,
                                  shipping_info=shipping_info)
-
+    order = place_order_service.place_order(order_request)
     return redirect(url_for('order.complete', order_id=order.id))
 
 
@@ -95,3 +97,7 @@ def extract_shipping_info(request):
 # @bp.route('/<int:order_id>/complete/', methods=['GET, '])
 # def complete(order_id: int):
 #     return render_template('order/coplete.html.j2')
+
+@bp.app_errorhandler(NoOrderProductException)
+def handle_no_order_product_exception(e):
+    return 'There is no given product.', 400

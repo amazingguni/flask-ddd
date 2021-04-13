@@ -6,6 +6,7 @@ from app.catalog.domain.product import Product
 from app.order.domain.order import Order
 from app.order.domain.order_line import OrderLine
 from app.order.domain.shipping_info import ShippingInfo
+from app.order.domain.order_state import OrderState
 
 from app.tests import utils
 
@@ -43,6 +44,7 @@ def test_place(db_session, client, loginned_user):
     db_session.commit()
 
     # When
+    print(db_session)
     response = client.post(url_for('order.place'), data={
         'shipping_info.receiver.name': 'Guni',
         'shipping_info.receiver.phone': '010-0000-0000',
