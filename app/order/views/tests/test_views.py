@@ -44,7 +44,6 @@ def test_place(db_session, client, loginned_user):
     db_session.commit()
 
     # When
-    print(db_session)
     response = client.post(url_for('order.place'), data={
         'shipping_info.receiver.name': 'Guni',
         'shipping_info.receiver.phone': '010-0000-0000',

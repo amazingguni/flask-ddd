@@ -73,8 +73,9 @@ def _transaction(request, _db):
     # Bind a session to the transaction. The empty `binds` dict is necessary
     # when specifying a `bind` option, or else Flask-SQLAlchemy won't scope
     # the connection properly
-    options = dict(bind=connection, binds={})
-    session = _db.create_scoped_session(options=options)
+    # options = dict(bind=connection, binds={})
+    # session = _db.create_scoped_session(options=options)
+    session = _db.session
 
     # Begin a nested transaction (any new transactions created in the codebase
     # will be held until this outer transaction is committed or closed)
