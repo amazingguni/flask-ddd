@@ -12,7 +12,7 @@ bp = Blueprint('user', __name__,
                template_folder='../templates', static_folder="../static", url_prefix='/user/')
 
 
-@bp.route('/login', methods=['GET', 'POST'])
+@bp.route('/login/', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if request.method == 'POST':
@@ -30,7 +30,7 @@ def login():
     return render_template('user/login.html')
 
 
-@bp.route('/signup', methods=['GET', 'POST'])
+@bp.route('/signup/', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
     if request.method == 'POST':
@@ -48,7 +48,7 @@ def signup():
     return render_template('user/signin.html')
 
 
-@bp.route('/logout')
+@bp.route('/logout/')
 @login_required
 def logout():
     logout_user()
@@ -56,13 +56,19 @@ def logout():
     return render_template('user/logged-out.html')
 
 
-@bp.route('/my')
+@bp.route('/my/')
 @login_required
 def my():
     return render_template('user/my.html')
 
 
-@bp.route('/orders')
+@bp.route('/orders/')
 @login_required
 def orders():
+    return render_template('user/orders.html')
+
+
+@bp.route('/order/<int:order_id>/')
+@login_required
+def order(order_id: int):
     return render_template('user/orders.html')
