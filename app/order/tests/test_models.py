@@ -6,29 +6,24 @@ from app.order.domain.shipping_info import ShippingInfo, Receiver, Address
 from app.order.domain.order_state import OrderState
 
 
-def test_order(db_session, orderer):
-    shipping_info = ShippingInfo(
-        receiver=Receiver('amazingguni', '000-000-0000'),
-        address=Address('zip_code', 'suwon', 'seoul'),
-        message='fast please'
-    )
+def test_order(db_session, loginned_user, shipping_info):
     order = Order(
-        orderer=orderer,
+        orderer=loginned_user,
         shipping_info=shipping_info,
-        total_amounts=4000, state=OrderState.PREPARING,
+        state=OrderState.PREPARING,
         order_date=datetime.fromisoformat('2016-01-01 15:30:00')
     )
     db_session.add(order)
     db_session.commit()
 
 
-def test_order_line_model(db_session, order):
+def test_order_line_model(db_session, product, order):
     order_line = OrderLine(
-        product_id='PRODUCT_1',
+        product=product,
         quantity='4',
     )
-    order_line.order = order
-    db_session.add(order_line)
+    order.order_lines.append(order_line)
+    db_session.add(order)
     db_session.commit()
 
     get_order_line = db_session.query(OrderLine).filter_by(

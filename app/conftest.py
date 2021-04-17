@@ -76,15 +76,49 @@ def db_session(db):
 
 @pytest.fixture(scope='function')
 def loginned_user(app, db_session):
-    user = User(username='사용자1', password='1234',
+    user = User(username='loginned_user', password='1234',
                 blocked=False, is_admin=False)
     db_session.add(user)
-    db_session.commit()
 
     @app.login_manager.request_loader
     def load_user_from_request(request):
         return user
     return user
+
+
+@pytest.fixture(scope='function')
+def category(db_session):
+    _category = Category(name='과자류')
+    db_session.add(_category)
+    return _category
+
+
+@pytest.fixture(scope='function')
+def product(db_session, category):
+    _product = Product(
+        name='꼬북칩', price=1000, detail='맛있는 꼬북칩')
+    _product.categories.append(category)
+    db_session.add(_product)
+    return _product
+
+
+@pytest.fixture(scope='function')
+def order(db_session, loginned_user, shipping_info, product):
+    _order = Order(orderer=loginned_user,
+                   shipping_info=shipping_info, state=OrderState.PREPARING)
+    order_line = OrderLine(order=_order, product=product, quantity=1)
+    _order.order_lines.append(order_line)
+    db_session.add(_order)
+    return _order
+
+
+@pytest.fixture(scope='function')
+def shipping_info():
+    receiver = Receiver(name='guni', phone='010-0000-0000')
+    address = Address(zip_code='00000', address1='seoul', address2='seocho-gu')
+    shipping_info = ShippingInfo(
+        receiver=receiver, address=address, message='Fast please')
+    return shipping_info
 
 
 @pytest.fixture(scope='function')
@@ -122,7 +156,7 @@ def pre_data_db_session(db_session):
         message='메시지')
     order1 = Order(
         orderer=user1, shipping_info=shipping_info,
-        total_amounts=4000, state=OrderState.PREPARING,
+        state=OrderState.PREPARING,
         order_date=datetime.fromisoformat('2016-01-01 15:30:00')
     )
     order1.order_lines.append(
@@ -136,7 +170,7 @@ def pre_data_db_session(db_session):
         message='메시지')
     order2 = Order(
         orderer=user1, shipping_info=shipping_info,
-        total_amounts=5000, state=OrderState.PREPARING,
+        state=OrderState.PREPARING,
         order_date=datetime.fromisoformat('2016-01-02 09:18:21')
     )
     order2.order_lines.append(
@@ -148,7 +182,7 @@ def pre_data_db_session(db_session):
         message='메시지')
     order3 = Order(
         orderer=user2, shipping_info=shipping_info,
-        total_amounts=5000, state=OrderState.SHIPPED,
+        state=OrderState.SHIPPED,
         order_date=datetime.fromisoformat('2016-01-03 09:00:00')
     )
     order3.order_lines.append(

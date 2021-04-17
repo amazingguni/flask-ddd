@@ -10,7 +10,6 @@ def test_save(db_session, loginned_user, shipping_info):
     order = Order(
         orderer=loginned_user,
         shipping_info=shipping_info,
-        total_amounts=10000,
         state=OrderState.PAYMENT_WAITING
     )
 

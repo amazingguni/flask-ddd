@@ -31,7 +31,7 @@ class SqlOrderSummaryDao(OrderSummaryDao):
             order_id=order.id,
             orderer_id=order.orderer.id,
             orderer_username=order.orderer.username,
-            total_amounts=order.total_amounts,
+            total_amounts=order.get_total_amounts(),
             receiver_name=order.shipping_info.receiver.name,
             state=order.state,
             order_date=order.order_date,

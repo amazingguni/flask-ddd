@@ -18,7 +18,5 @@ class PlaceOrderService:
             product = self.product_repository.find_by_id(op.product_id)
             order.order_lines.append(
                 OrderLine(product=product, quantity=op.quantity))
-        order.total_amounts = sum([line.get_amounts()
-                                  for line in order.order_lines])
         self.order_repository.save(order)
         return order

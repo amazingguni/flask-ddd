@@ -14,7 +14,7 @@ def test_select_by_orderer(pre_data_db_session, order_summary_dao):
     assert summary.orderer_username == '사용자1'
     assert summary.product_id == 1
     assert summary.product_name == '라즈베리파이3 모델B'
-    assert summary.total_amounts == 4000
+    assert summary.total_amounts == 123920
 
 
 def test_count_by_filter(pre_data_db_session, order_summary_dao):
@@ -38,7 +38,7 @@ def test_select_by_filter_limited_test(db_session, order_summary_dao, loginned_u
     for _ in range(15):
         db_session.add(Order(
             orderer=loginned_user, shipping_info=shipping_info,
-            total_amounts=1000, state=OrderState.PREPARING
+            state=OrderState.PREPARING
         ))
     db_session.commit()
 

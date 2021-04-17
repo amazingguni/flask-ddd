@@ -31,7 +31,8 @@ class Order(db.Model):
                               shipping_zip_code, shipping_address1, shipping_address2,
                               shipping_message)
 
-    total_amounts = db.Column(db.Integer)
-
     state = db.Column(db.Enum(OrderState))
     order_date = db.Column(db.DateTime, server_default=func.now())
+
+    def get_total_amounts(self):
+        return sum([line.get_amounts() for line in self.order_lines])
