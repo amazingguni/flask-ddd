@@ -1,10 +1,12 @@
+import contextlib
 from flask import template_rendered
 from datetime import datetime
 import pytest
 import sqlalchemy as sa
+from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
-from app import db
+from app import db as app_db
 from app.user.domain.user import User
 
 from app.catalog.domain.category import Category
@@ -16,7 +18,7 @@ from app.order.domain.order_line import OrderLine
 
 
 @pytest.fixture(scope='session')
-def app(request):
+def app():
     """ Session wide test 'Flask' application """
     _app = create_app('config.testing.TestingConfig')
     ctx = _app.app_context()
@@ -50,83 +52,26 @@ def captured_templates(app):
 
 
 @pytest.fixture(scope='function')
-def _db(app):
-    """ Session-wide test database """
-    db.drop_all()
-    db.app = app
-    db.create_all()
+def db(app):
+    _db = app_db
+    _db.drop_all()
+    _db.create_all()
+    yield _db
 
-    yield db
-
-    db.drop_all()
+    _db.drop_all()
 
 
 @pytest.fixture(scope='function')
-def _transaction(request, _db):
-    '''
-    Create a transactional context for tests to run in.
-    '''
-    # Start a transaction
-    connection = _db.engine.connect()
+def db_session(db):
+    connection = db.engine.connect()
     transaction = connection.begin()
+    session = db.session
 
-    # Bind a session to the transaction. The empty `binds` dict is necessary
-    # when specifying a `bind` option, or else Flask-SQLAlchemy won't scope
-    # the connection properly
-    # options = dict(bind=connection, binds={})
-    # session = _db.create_scoped_session(options=options)
-    session = _db.session
+    yield db.session
 
-    # Begin a nested transaction (any new transactions created in the codebase
-    # will be held until this outer transaction is committed or closed)
-    session.begin_nested()
-
-    # Each time the SAVEPOINT for the nested transaction ends, reopen it
-    @sa.event.listens_for(session, 'after_transaction_end')
-    # pylint: disable=unused-variable
-    def restart_savepoint(session, trans):
-        # pylint: disable=protected-access
-        if trans.nested and not trans._parent.nested:
-            # ensure that state is expired the way
-            # session.commit() at the top level normally does
-            session.expire_all()
-            session.begin_nested()
-
-    # Force the connection to use nested transactions
-    connection.begin = connection.begin_nested
-
-    # If an object gets moved to the 'detached' state by a call to flush the session,
-    # add it back into the session (this allows us to see changes made to objects
-    # in the context of a test, even when the change was made elsewhere in
-    # the codebase)
-    @sa.event.listens_for(session, 'persistent_to_detached')
-    @sa.event.listens_for(session, 'deleted_to_detached')
-    # pylint: disable=unused-variable
-    def rehydrate_object(session, obj):
-        session.add(obj)
-
-    @request.addfinalizer
-    # pylint: disable=unused-variable
-    def teardown_transaction():
-        # Delete the session
-        session.remove()
-
-        # Rollback the transaction and return the connection to the pool
-        transaction.rollback()
-        connection.close()
-
-    return connection, transaction, session
-
-
-@pytest.fixture(scope='function')
-def _session(pytestconfig, _transaction):
-    _, _, session = _transaction
-    return session
-
-
-@pytest.fixture(scope='function')
-def db_session(_session, _transaction):
-    return _session
+    session.close()
+    transaction.rollback()
+    connection.close()
 
 
 @pytest.fixture(scope='function')

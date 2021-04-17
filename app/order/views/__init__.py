@@ -93,10 +93,11 @@ def extract_shipping_info(request):
     return ShippingInfo(receiver=receiver, address=address, message=message)
 
 
-# @login_required
-# @bp.route('/<int:order_id>/complete/', methods=['GET, '])
-# def complete(order_id: int):
-#     return render_template('order/coplete.html.j2')
+@login_required
+@bp.route('/<int:order_id>/complete/', methods=['GET, '])
+def complete(order_id: int):
+    return render_template('order/complete.html.j2')
+
 
 @bp.app_errorhandler(NoOrderProductException)
 def handle_no_order_product_exception(e):

@@ -16,8 +16,6 @@ class PlaceOrderService:
             product = self.product_repository.find_by_id(op.product_id)
             order_lines.append(
                 OrderLine(product=product, quantity=op.quantity))
-        print('!!!', self.order_repository.session)
-        print('!!!', self.product_repository.session)
         order = Order(
             orderer=order_request.orderer,
             order_lines=order_lines,

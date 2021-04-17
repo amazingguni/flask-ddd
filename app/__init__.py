@@ -39,7 +39,8 @@ def create_app(config_name='config.development.DevelopmentConfig'):
     register_blueprints(app, views)
 
     from .containers import Container
-    container = Container(app=app, session=db.session)
+    session = db.session
+    container = Container(app=app, session=session)
     app.container = container
     with app.app_context():
         container.wire(modules=views)
