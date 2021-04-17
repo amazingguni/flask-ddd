@@ -10,17 +10,15 @@ class PlaceOrderService:
         self.order_repository = order_repository
 
     def place_order(self, order_request: OrderRequest):
-
-        order_lines = []
-        for op in order_request.order_products:
-            product = self.product_repository.find_by_id(op.product_id)
-            order_lines.append(
-                OrderLine(product=product, quantity=op.quantity))
         order = Order(
             orderer=order_request.orderer,
-            order_lines=order_lines,
             shipping_info=order_request.shipping_info,
             state=OrderState.PAYMENT_WAITING)
-
+        for op in order_request.order_products:
+            product = self.product_repository.find_by_id(op.product_id)
+            order.order_lines.append(
+                OrderLine(product=product, quantity=op.quantity))
+        order.total_amounts = sum([line.get_amounts()
+                                  for line in order.order_lines])
         self.order_repository.save(order)
         return order

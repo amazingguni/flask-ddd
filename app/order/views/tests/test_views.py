@@ -57,13 +57,13 @@ def test_place(db_session, client, loginned_user):
 
     # Then
     assert response.status_code == 302
-    # order = db_session.query(Order).first()
-    # assert order.orderer == loginned_user
-    # assert order.shipping_info.receiver.name == 'Guni'
-    # assert order.shipping_info.receiver.phone == '010-0000-0000'
-    # assert order.shipping_info.address.zip_code == '00000'
-    # assert order.shipping_info.address.address1 == '관악구'
-    # assert order.shipping_info.address.address2 == '대한민국 서울'
-    # assert order.shipping_info.message == '빨리 가져다 주셔요'
-    # assert order.total_amount == 56000
-    # assert order.state == OrderState.PAYMENT_WAITING
+    order = db_session.query(Order).first()
+    assert order.orderer == loginned_user
+    assert order.shipping_info.receiver.name == 'Guni'
+    assert order.shipping_info.receiver.phone == '010-0000-0000'
+    assert order.shipping_info.address.zip_code == '00000'
+    assert order.shipping_info.address.address1 == '관악구'
+    assert order.shipping_info.address.address2 == '대한민국 서울'
+    assert order.shipping_info.message == '빨리 가져다 주셔요'
+    assert order.total_amounts == 56000
+    assert order.state == OrderState.PAYMENT_WAITING

@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 
 
-# @dataclass
+@dataclass
 class Receiver:
     def __init__(self, name, phone):
         self.name = name
@@ -20,7 +20,7 @@ class Receiver:
         return not self.__eq__(other)
 
 
-# @dataclass
+@dataclass
 class Address:
     def __init__(self, zip_code, address1, address2):
         self.zip_code = zip_code
@@ -40,7 +40,7 @@ class Address:
         return not self.__eq__(other)
 
 
-# @dataclass
+@dataclass
 class ShippingInfo:
     def __init__(self, receiver, address, message):
         self.receiver = receiver
@@ -67,6 +67,6 @@ class ShippingInfo:
 
     def __composite_values__(self):
         return \
-            self.address.__composite_values__() + \
             self.receiver.__composite_values__() + \
+            self.address.__composite_values__() + \
             (self.message,)

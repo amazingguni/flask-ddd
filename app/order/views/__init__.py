@@ -23,7 +23,7 @@ bp = Blueprint('order', __name__,
 
 
 @login_required
-@bp.route('/confirm', methods=['GET', ])
+@bp.route('/confirm/', methods=['GET', ])
 @inject
 def confirm(product_repository: ProductRepository = Provide[Container.product_repository]):
     order_products = []
@@ -56,7 +56,7 @@ def get_products(order_products, product_repository: ProductRepository = Provide
 
 
 @login_required
-@bp.route('/place', methods=['POST', ])
+@bp.route('/place/', methods=['POST', ])
 @inject
 def place(place_order_service: PlaceOrderService = Provide[Container.place_order_service]):
     order_products = extract_order_products(request)
@@ -94,9 +94,9 @@ def extract_shipping_info(request):
 
 
 @login_required
-@bp.route('/<int:order_id>/complete/', methods=['GET, '])
+@bp.route('/<int:order_id>/complete/', methods=['GET', ])
 def complete(order_id: int):
-    return render_template('order/complete.html.j2')
+    return render_template('order/order_complete.html.j2', order_id=order_id)
 
 
 @bp.app_errorhandler(NoOrderProductException)
