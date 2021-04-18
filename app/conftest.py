@@ -122,7 +122,7 @@ def shipping_info():
 
 
 @pytest.fixture(scope='function')
-def pre_data_db_session(db_session):
+def pre_data_db_session(db_session, order):
     user1 = User(username='사용자1', password='1234',
                  blocked=False, is_admin=False)
     user2 = User(username='사용자2', password='5678',
