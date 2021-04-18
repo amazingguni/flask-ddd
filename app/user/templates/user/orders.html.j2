@@ -17,10 +17,11 @@
   <tbody>
     {% for order in orders %}
     <tr>
-      <td><a href="/my/orders/{{order.number}}">{{order.number}}</a></td>
-      <td>{{order.totalAmounts}}</td>
+      <td><a href="{{ url_for('user.order_detail', order_id=order.order_id) }}">
+        {{order.order_id}}</a></td>
+      <td>{{order.total_amounts}}</td>
       <td>{{order.state}}</td>
-      <td>{{order.productName}} 등</td>
+      <td>{{order.product_name}} 등</td>
     </tr>
     {% endfor %}
   </tbody>

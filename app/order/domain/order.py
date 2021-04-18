@@ -36,3 +36,7 @@ class Order(db.Model):
 
     def get_total_amounts(self):
         return sum([line.get_amounts() for line in self.order_lines])
+
+    def is_not_yet_shipped(self):
+        return self.state == OrderState.PAYMENT_WAITING or \
+            self.state == OrderState.PREPARING

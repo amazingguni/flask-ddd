@@ -11,6 +11,7 @@ from app.user.domain.login_form import LoginForm
 from app.user.domain.register_form import RegisterForm
 from app.user.domain.user import User
 from app.order.domain.order_repository import OrderRepository
+from app.order.query.dao.order_summary_dao import OrderSummaryDao
 
 bp = Blueprint('user', __name__,
                template_folder='../templates', static_folder="../static", url_prefix='/user/')
@@ -68,11 +69,13 @@ def my():
 
 @bp.route('/orders/')
 @login_required
-def orders():
-    return render_template('user/orders.html.j2')
+@inject
+def orders(order_summary_dao: OrderSummaryDao = Provide[Container.order_summary_dao]):
+    _orders = order_summary_dao.select_by_orderer(current_user.id)
+    return render_template('user/orders.html.j2', orders=_orders)
 
 
-@bp.route('/order/<int:order_id>/', methods=['GET', ])
+@bp.route('/orders/<int:order_id>/', methods=['GET', ])
 @login_required
 @inject
 def order_detail(order_id: int, order_repository: OrderRepository = Provide[Container.order_repository]):

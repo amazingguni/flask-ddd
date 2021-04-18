@@ -46,3 +46,14 @@ def test_order_detail_GIVEN_others_order_THEN_not_your_order_page(
     assert response.status_code == 200
     template, _ = captured_templates[0]
     assert template.name == 'user/not_your_order.html.j2'
+
+
+def test_orders(client, loginned_user, order, captured_templates):
+    # When
+    response = client.get(url_for('user.orders'))
+
+    # Then
+    assert response.status_code == 200
+    template, context = captured_templates[0]
+    assert template.name == 'user/orders.html.j2'
+    assert len(context['orders']) == 1
