@@ -1,5 +1,7 @@
 # flask-ddd
 
+[![Python application](https://github.com/amazingguni/flask-ddd/actions/workflows/python-app.yml/badge.svg)](https://github.com/amazingguni/flask-ddd/actions/workflows/python-app.yml) [![codecov](https://codecov.io/gh/amazingguni/flask-ddd/branch/main/graph/badge.svg?token=2KJAHKYG85)](https://codecov.io/gh/amazingguni/flask-ddd)
+
 This repository for trying ddd using flask
 
 ## Reference
