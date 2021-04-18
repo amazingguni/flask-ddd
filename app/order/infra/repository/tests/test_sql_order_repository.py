@@ -18,3 +18,19 @@ def test_save(db_session, loginned_user, shipping_info):
 
     # Then
     assert db_session.query(Order).count() == 1
+
+
+def test_find_all(pre_data_db_session):
+    # When
+    orders = SqlOrderRepository(pre_data_db_session).find_all()
+
+    # Then
+    assert len(orders) == 4
+
+
+def test_find_by_id(pre_data_db_session, order):
+    # When
+    return_order = SqlOrderRepository(pre_data_db_session).find_by_id(order.id)
+
+    # Then
+    assert return_order.id == order.id

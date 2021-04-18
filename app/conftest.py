@@ -99,6 +99,7 @@ def product(db_session, category):
         name='꼬북칩', price=1000, detail='맛있는 꼬북칩')
     _product.categories.append(category)
     db_session.add(_product)
+    db_session.flush()
     return _product
 
 
@@ -109,6 +110,7 @@ def order(db_session, loginned_user, shipping_info, product):
     order_line = OrderLine(order=_order, product=product, quantity=1)
     _order.order_lines.append(order_line)
     db_session.add(_order)
+    db_session.flush()
     return _order
 
 

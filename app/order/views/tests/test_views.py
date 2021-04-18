@@ -23,6 +23,7 @@ def test_confirm(db_session, client, captured_templates, loginned_user):
         url_for('order.confirm', quantity=1, product_id=product.id))
 
     # Then
+    assert response.status_code == 200
     template, context = captured_templates[0]
     assert template.name == 'order/order_confirm.html.j2'
     assert context['orderer'] == loginned_user

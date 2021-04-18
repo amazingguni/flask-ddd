@@ -1,12 +1,16 @@
 
+from dependency_injector.wiring import inject, Provide
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user, login_user, logout_user
 
 from werkzeug.exceptions import InternalServerError
+
+from app import db
+from app.containers import Container
 from app.user.domain.login_form import LoginForm
 from app.user.domain.register_form import RegisterForm
-from app import db
-from ..domain.user import User
+from app.user.domain.user import User
+from app.order.domain.order_repository import OrderRepository
 
 bp = Blueprint('user', __name__,
                template_folder='../templates', static_folder="../static", url_prefix='/user/')
@@ -27,7 +31,7 @@ def login():
         flash('You were logged in.')
         next = request.args.get('next')
         return redirect(next or url_for('home'))
-    return render_template('user/login.html')
+    return render_template('user/login.html.j2')
 
 
 @bp.route('/signup/', methods=['GET', 'POST'])
@@ -45,7 +49,7 @@ def signup():
         db.session.commit()
         login_user(user)
         return redirect(url_for('home'))
-    return render_template('user/signin.html')
+    return render_template('user/signin.html.j2')
 
 
 @bp.route('/logout/')
@@ -53,22 +57,24 @@ def signup():
 def logout():
     logout_user()
     flash('You were logged out.')
-    return render_template('user/logged-out.html')
+    return render_template('user/logged-out.html.j2')
 
 
 @bp.route('/my/')
 @login_required
 def my():
-    return render_template('user/my.html')
+    return render_template('user/my.html.j2')
 
 
 @bp.route('/orders/')
 @login_required
 def orders():
-    return render_template('user/orders.html')
+    return render_template('user/orders.html.j2')
 
 
-@bp.route('/order/<int:order_id>/')
+@bp.route('/order/<int:order_id>/', methods=['GET', ])
 @login_required
-def order(order_id: int):
-    return render_template('user/orders.html')
+@inject
+def order_detail(order_id: int, order_repository: OrderRepository = Provide[Container.order_repository]):
+    order = order_repository.find_by_id(order_id)
+    return render_template('user/order_detail.html.j2', order=order)

@@ -24,8 +24,7 @@ bp = Blueprint('order', __name__,
 
 @login_required
 @bp.route('/confirm/', methods=['GET', ])
-@inject
-def confirm(product_repository: ProductRepository = Provide[Container.product_repository]):
+def confirm():
     order_products = []
     try:
         product_id = int(request.args.get('product_id'))

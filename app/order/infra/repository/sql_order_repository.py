@@ -11,7 +11,7 @@ class SqlOrderRepository(OrderRepository):
         self.session.commit()
 
     def find_all(self):
-        pass
+        return self.session.query(Order).all()
 
     def find_by_id(self, id: int):
-        pass
+        return self.session.query(Order).filter(Order.id == id).first()
