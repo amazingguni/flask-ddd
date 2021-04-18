@@ -4,9 +4,7 @@
 
 {% block content %}
   <h2>주문 상세</h2>
-
-    {# <jsp:include page="/WEB-INF/view/common/order/orderDetailPart.jsp" /> #}
-
+    {% include 'common/order/order_detail_part.html.j2' %}
     <div class="panel panel-default">
         <div class="panel-body">
             {% if order.is_not_yet_shipped() %}

@@ -1,0 +1,98 @@
+<form class="form-horizontal">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">주문</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">번호</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{ order.id }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">상태</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{ order.state }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">주문자</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">이름</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{ order.orderer.username }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">받는 사람</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">이름</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{ order.shipping_info.receiver.name }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">연락처</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{ order.shipping_info.receiver.phone }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">주소</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">
+                        {{ order.shipping_info.address.zip_code }}
+                        {{ order.shipping_info.address.address1 }}
+                        {{ order.shipping_info.address.address2 }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">주문 상품</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>상품</th>
+                    <th>가격</th>
+                    <th>개수</th>
+                    <th>합</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ol in order.order_lines %}
+                    <tr>
+                        <td>{{ ol.product.name }}</td>
+                        <td>{{ ol.product.price }}</td>
+                        <td>{{ ol.quantity }}</td>
+                        <td>{{ ol.get_amounts() }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3">총합</td>
+                    <td>{{ order.get_total_amounts() }}</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</form>
