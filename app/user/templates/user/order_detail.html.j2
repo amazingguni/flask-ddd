@@ -3,16 +3,32 @@
 {% block title %} 주문 상세: {{ order.id }} {% endblock %} 
 
 {% block content %}
-  <h2>주문 상세</h2>
-    {% include 'common/order/order_detail_part.html.j2' %}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            {% if order.is_not_yet_shipped() %}
-                <button id="cancelBtn" class="btn btn-default">주문 취소하기</button>
-                <button id="changeShippingBtn" class="btn btn-default">배송지 변경하기</button>
-            {% endif %}
-            <a class="btn btn-default" href="{{ url_for('user.orders') }}" role="button">주문 목록 보기</a>
-            <a class="btn btn-default" href="{{ url_for('home') }}" role="button">첫 화면으로 이동하기</a>
-        </div>
+<h2>주문 상세</h2>
+{% include 'common/order/order_detail_part.html.j2' %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        {% if order.is_not_yet_shipped() %}
+            <button id="cancelBtn" class="btn btn-default">주문 취소하기</button>
+            <button id="changeShippingBtn" class="btn btn-default">배송지 변경하기</button>
+        {% endif %}
+        <a class="btn btn-default" href="{{ url_for('user.orders') }}" role="button">주문 목록 보기</a>
+        <a class="btn btn-default" href="{{ url_for('home') }}" role="button">첫 화면으로 이동하기</a>
     </div>
+</div>
+
+{# <form id="goCancelForm" action="/my/orders/{{order.number}/cancel" method="post"></form> #}
+{# <form id="goChangeShippingForm" action="/my/orders/${order.number}/shippingInfo" method="get"></form> #}
+
+<script>
+    $(function () {
+        $("#cancelBtn").click(function () {
+            if (confirm("주문을 취소하시겠습니까?")) {
+                $("#goCancelForm").submit();
+            }
+        });
+        $("#changeShippingBtn").click(function () {
+            $("#goChangeShippingForm").submit();
+        });
+    });
+</script>
 {% endblock %}
