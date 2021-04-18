@@ -1,4 +1,4 @@
-{% extends "base.html" %} 
+{% extends "base.html.j2" %} 
 
 {% block title %} 관리자 : 주문 목록 {% endblock %}
 {% block content %}
@@ -7,7 +7,28 @@
     <li class="active"><a href="{{ url_for('admin.orders') }}">주문 관리</a></li>
 </ol>
 <h2>주문 목록</h2>
-{% if orderPage and orderPage.items|length %}
+{% if order_page and order_page.orders|length %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>주문번호</th>
+      <th>금액</th>
+      <th>상태</th>
+      <th>상품</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in order_page.orders %}
+    <tr>
+      <td><a href="{{ url_for('user.order_detail', order_id=order.id) }}">
+        {{ order.id }}</a></td>
+      <td>{{ order.get_total_amounts() }}</td>
+      <td>{{ order.state }}</td>
+      <td>{{ order.product_name }} 등</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% else %}
     <div class="alert alert-info" role="alert">
         주문 내역이 없습니다.

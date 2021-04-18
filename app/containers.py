@@ -11,6 +11,7 @@ from .order.infra.repository.sql_order_repository import SqlOrderRepository
 from .order.query.application.order_view_list_service import OrderViewListService
 from .order.application.place_order_service import PlaceOrderService
 from .order.application.cancel_order_service import CancelOrderService
+from .order.infra.paygate.external_refund_service import ExternalRefundService
 
 # https://github.com/ets-labs/python-dependency-injector/issues/344
 
@@ -33,5 +34,6 @@ class Container(containers.DeclarativeContainer):
         SqlOrderRepository, session=session)
     place_order_service = providers.Factory(
         PlaceOrderService, product_repository=product_repository, order_repository=order_repository)
+    refund_service = providers.Factory(ExternalRefundService)
     cancel_order_service = providers.Factory(
-        CancelOrderService, order_repository=order_repository)
+        CancelOrderService, order_repository=order_repository, refund_service=refund_service)

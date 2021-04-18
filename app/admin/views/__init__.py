@@ -25,7 +25,7 @@ def index():
 @inject
 def orders(order_view_list_service: OrderViewListService = Provide[Container.order_view_list_service]):
     size = 20
-    request = ListRequest(0, 10)
+    request = ListRequest(0, size)
     order_page = order_view_list_service.get_list(request)
     return render_template('admin/orders.html.j2', order_page=order_page)
 

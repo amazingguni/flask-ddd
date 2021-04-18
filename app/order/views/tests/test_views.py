@@ -79,3 +79,34 @@ def test_cancel(db_session, client, loginned_user, order):
         response, url_for('order.canceled', order_id=order.id))
     db_session.refresh(order)
     assert order.state == OrderState.CANCELED
+
+
+def test_change_shipping_info_page(client, captured_templates, order):
+    # When
+    response = client.get(
+        url_for('order.change_shipping_info', order_id=order.id))
+
+    # Then
+    assert response.status_code == 200
+    template, context = captured_templates[0]
+    assert template.name == 'order/change_shipping_info.html.j2'
+    assert context['order'] == order
+
+
+def test_change_shipping_info_submit(db_session, client, order):
+    # When
+    response = client.post(
+        url_for('order.change_shipping_info', order_id=order.id),
+        data={
+            'shipping_info.receiver.name': 'Changed',
+            'shipping_info.receiver.phone': 'xxx-xxx-xxxx',
+            'shipping_info.address.zip_code': '11111',
+            'shipping_info.address.address1': '금천구구',
+            'shipping_info.address.address2': '미국',
+            'shipping_info.message': 'hurry up', })
+
+    # Then
+    utils.assert_redirect_response(response, url_for(
+        'user.order_detail', order_id=order.id))
+    db_session.refresh(order)
+    assert order.shipping_info.receiver.name == 'Changed'

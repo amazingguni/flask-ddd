@@ -43,7 +43,7 @@ class Order(db.Model):
     def cancel(self):
         self.verify_not_yet_shipped()
         self.state = OrderState.CANCELED
-        dispatcher.dispatch(OrderCanceledEvent(self.id))
+        dispatcher.dispatch(OrderCanceledEvent(order_id=self.id))
 
     def verify_not_yet_shipped(self):
         if not self.is_not_yet_shipped():

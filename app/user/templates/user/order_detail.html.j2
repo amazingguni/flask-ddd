@@ -1,4 +1,4 @@
-{% extends "base.html" %} 
+{% extends "base.html.j2" %} 
 
 {% block title %} 주문 상세: {{ order.id }} {% endblock %} 
 
@@ -17,7 +17,7 @@
 </div>
 
 <form id="goCancelForm" action="{{ url_for('order.cancel', order_id=order.id) }}" method="post"></form>
-{# <form id="goChangeShippingForm" action="/my/orders/${order.number}/shippingInfo" method="get"></form> #}
+<form id="goChangeShippingForm" action="{{ url_for('order.change_shipping_info', order_id=order.id) }}" method="get"></form>
 
 <script>
     $(function () {

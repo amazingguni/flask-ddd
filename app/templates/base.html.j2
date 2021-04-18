@@ -10,8 +10,8 @@
     <script src="{{ url_for('static', filename='vendor/js/jquery-1.12.2.min.js') }}"></script>
   </head>
   <body>
-    {% include 'navi.html' %}
+    {% include 'navi.html.j2' %}
     <div class="container">{% block content %}{% endblock %}</div>
-    {% include 'footer.html' %}
+    {% include 'footer.html.j2' %}
   </body>
 </html>

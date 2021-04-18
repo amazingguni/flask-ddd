@@ -29,7 +29,7 @@ def create_app(config_name='config.development.DevelopmentConfig'):
     @app.route('/')
     # pylint: disable=unused-variable
     def home():
-        return render_template('home.html')
+        return render_template('home.html.j2')
 
     from .user import views as user_views
     from .catalog import views as catalog_views
