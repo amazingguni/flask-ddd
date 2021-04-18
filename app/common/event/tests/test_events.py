@@ -1,6 +1,6 @@
-from ..event_dispatcher import EventDispatcher
-from ..event import Event
-from ..handler import Handler
+from app.common.event.event_dispatcher import EventDispatcher
+from app.common.event.event import Event
+from app.common.event.handler import Handler
 
 
 class CustomEvent(Event):

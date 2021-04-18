@@ -10,15 +10,15 @@ from app.containers import Container
 
 from app.catalog.domain.product_repository import ProductRepository
 
-from ..domain.order import Order
-from ..domain.shipping_info import ShippingInfo, Receiver, Address
-from ..domain.order_line import OrderLine
-from ..application.order_product import OrderProduct
-from ..application.order_request import OrderRequest
-from ..application.exceptions import NoOrderProductException
-from ..application.place_order_service import PlaceOrderService
-from ..application.cancel_order_service import CancelOrderService
-from ..domain.order_repository import OrderRepository
+from app.order.domain.order import Order
+from app.order.domain.shipping_info import ShippingInfo, Receiver, Address
+from app.order.domain.order_line import OrderLine
+from app.order.application.order_product import OrderProduct
+from app.order.application.order_request import OrderRequest
+from app.order.application.exceptions import NoOrderProductException
+from app.order.application.place_order_service import PlaceOrderService
+from app.order.application.cancel_order_service import CancelOrderService
+from app.order.domain.order_repository import OrderRepository
 
 bp = Blueprint('order', __name__,
                template_folder='../templates', static_folder="../static", url_prefix='/order/')

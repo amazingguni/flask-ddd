@@ -1,6 +1,6 @@
-from ...domain.product_repository import ProductRepository
-from ...domain.product import Product
-from ...domain.category import Category
+from app.catalog.domain.product_repository import ProductRepository
+from app.catalog.domain.product import Product
+from app.catalog.domain.category import Category
 
 
 class SqlProductRepository(ProductRepository):

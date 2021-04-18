@@ -1,6 +1,6 @@
-from ....domain.category import Category
-from ....domain.product import Product
-from ..sql_product_repository import SqlProductRepository
+from app.catalog.domain.category import Category
+from app.catalog.domain.product import Product
+from app.catalog.infra.repository.sql_product_repository import SqlProductRepository
 
 
 def test_save(db_session):

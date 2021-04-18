@@ -1,6 +1,6 @@
 import pytest
-from ...domain.category import Category
-from ...domain.product import Product
+from app.catalog.domain.category import Category
+from app.catalog.domain.product import Product
 
 
 @pytest.fixture(scope='function')

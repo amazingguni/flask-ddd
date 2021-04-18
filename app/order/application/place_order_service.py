@@ -1,7 +1,8 @@
+from app.order.domain.order import Order
+from app.order.domain.order_state import OrderState
+from app.order.domain.order_line import OrderLine
+
 from .order_request import OrderRequest
-from ..domain.order import Order
-from ..domain.order_state import OrderState
-from ..domain.order_line import OrderLine
 
 
 class PlaceOrderService:

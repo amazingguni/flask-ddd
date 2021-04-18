@@ -1,6 +1,6 @@
 import pytest
-from ..change_shipping_service import ChangeShippingService
-from ..exceptions import NoOrderException
+from app.order.application.change_shipping_service import ChangeShippingService
+from app.order.application.exceptions import NoOrderException
 
 
 @pytest.fixture(scope='function')

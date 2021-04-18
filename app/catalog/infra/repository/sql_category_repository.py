@@ -1,5 +1,5 @@
-from ...domain.category_repository import CategoryRepository
-from ...domain.category import Category
+from app.catalog.domain.category_repository import CategoryRepository
+from app.catalog.domain.category import Category
 
 
 class SqlCategoryRepository(CategoryRepository):

@@ -2,7 +2,7 @@ from app.order.domain.order import Order
 from app.order.domain.order_state import OrderState
 from app.order.domain.shipping_info import ShippingInfo, Receiver, Address
 
-from ..sql_order_repository import SqlOrderRepository
+from app.order.infra.repository.sql_order_repository import SqlOrderRepository
 
 
 def test_save(db_session, loginned_user, shipping_info):

@@ -1,5 +1,5 @@
-from ....domain.category import Category
-from ..sql_category_repository import SqlCategoryRepository
+from app.catalog.domain.category import Category
+from app.catalog.infra.repository.sql_category_repository import SqlCategoryRepository
 
 
 def test_save(db_session):

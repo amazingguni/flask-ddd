@@ -9,8 +9,8 @@ from app.catalog.domain.product import Product
 from app.order.query.application.order_view_list_service import OrderViewListService
 from app.order.query.application.list_request import ListRequest
 
-from ..domain.category_form import CategoryForm
-from ..domain.product_form import ProductForm
+from app.admin.domain.category_form import CategoryForm
+from app.admin.domain.product_form import ProductForm
 
 bp = Blueprint('admin', __name__,
                template_folder='../templates', static_folder="../static", url_prefix='/admin/')

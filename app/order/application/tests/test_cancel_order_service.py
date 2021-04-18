@@ -3,7 +3,7 @@ from unittest import mock
 from app.order.domain.order_state import OrderState
 from app.order.domain.exceptions import AlreadyShippedException
 from app.order.infra.paygate.external_refund_service import ExternalRefundService
-from ..cancel_order_service import CancelOrderService
+from app.order.application.cancel_order_service import CancelOrderService
 
 
 @pytest.fixture(scope='function')

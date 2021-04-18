@@ -1,5 +1,5 @@
-from ...domain.order import Order
-from ...domain.order_repository import OrderRepository
+from app.order.domain.order import Order
+from app.order.domain.order_repository import OrderRepository
 
 
 class SqlOrderRepository(OrderRepository):
