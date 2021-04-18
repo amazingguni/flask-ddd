@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 600e9697a9ea
+Revision ID: 6ba33d4e14b9
 Revises: 
-Create Date: 2021-04-17 18:01:15.766918
+Create Date: 2021-04-19 08:12:48.331245
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '600e9697a9ea'
+revision = '6ba33d4e14b9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -55,7 +55,6 @@ def upgrade():
     sa.Column('shipping_address1', sa.String(), nullable=True),
     sa.Column('shipping_address2', sa.String(), nullable=True),
     sa.Column('shipping_message', sa.String(), nullable=True),
-    sa.Column('total_amounts', sa.Integer(), nullable=True),
     sa.Column('state', sa.Enum('PAYMENT_WAITING', 'PREPARING', 'SHIPPED', 'DELIVERING', 'DELIVERY_COMPLETED', 'CANCELED', name='orderstate'), nullable=True),
     sa.Column('order_date', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.ForeignKeyConstraint(['orderer_id'], ['user.id'], ondelete='CASCADE'),
