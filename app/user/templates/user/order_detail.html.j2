@@ -1,7 +1,20 @@
 {% extends "base.html" %} 
 
-{% block title %} 주문 목록 {% endblock %} 
+{% block title %} 주문 상세: {{ order.id }} {% endblock %} 
 
 {% block content %}
+  <h2>주문 상세</h2>
 
+    <jsp:include page="/WEB-INF/view/common/order/orderDetailPart.jsp" />
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <c:if test="${order.notYetShipped}">
+                <button id="cancelBtn" class="btn btn-default">주문 취소하기</button>
+                <button id="changeShippingBtn" class="btn btn-default">배송지 변경하기</button>
+            </c:if>
+            <a class="btn btn-default" href="/my/orders" role="button">주문 목록 보기</a>
+            <a class="btn btn-default" href="/home" role="button">첫 화면으로 이동하기</a>
+        </div>
+    </div>
 {% endblock %}

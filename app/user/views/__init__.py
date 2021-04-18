@@ -77,4 +77,8 @@ def orders():
 @inject
 def order_detail(order_id: int, order_repository: OrderRepository = Provide[Container.order_repository]):
     order = order_repository.find_by_id(order_id)
+    if not order:
+        return render_template('user/no_order.html.j2')
+    if order.orderer != current_user:
+        return render_template('user/not_your_order.html.j2')
     return render_template('user/order_detail.html.j2', order=order)
