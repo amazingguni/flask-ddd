@@ -1,7 +1,15 @@
+from app import dispatcher
+from app.common.event.handler import Handler
 from app.user.domain.user import User
 from app.order.domain.order_repository import OrderRepository
 from app.order.domain.cancel_policy import CancelPolicy
+from app.order.domain.order_canceled_event import OrderCanceledEvent
 from .exceptions import NoOrderException, NoCancellablePermission
+
+
+class RefundHandler(Handler):
+    def handle(self, event):
+        pass
 
 
 class CancelOrderService:
@@ -10,6 +18,7 @@ class CancelOrderService:
         self.cancel_policy = CancelPolicy()
 
     def cancel(self, order_id: int, canceller: User):
+        dispatcher.register(OrderCanceledEvent, RefundHandler())
         order = self.find_order(order_id)
         if not self.cancel_policy.has_cancellation_permission(order, canceller):
             raise NoCancellablePermission

@@ -1,13 +1,15 @@
 from sqlalchemy.sql import func
 from sqlalchemy.orm import composite, relationship, backref
 
-from app import db
+from app import db, dispatcher
 
+from app.user.domain.user import User
 from .order_line import OrderLine
 from .order_state import OrderState
 from .shipping_info import ShippingInfo
-from app.user.domain.user import User
+
 from .exceptions import AlreadyShippedException
+from .order_canceled_event import OrderCanceledEvent
 
 
 class Order(db.Model):
@@ -41,6 +43,7 @@ class Order(db.Model):
     def cancel(self):
         self.verify_not_yet_shipped()
         self.state = OrderState.CANCELED
+        dispatcher.dispatch(OrderCanceledEvent(self.id))
 
     def verify_not_yet_shipped(self):
         if not self.is_not_yet_shipped():

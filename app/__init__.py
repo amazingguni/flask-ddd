@@ -7,11 +7,12 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_login import LoginManager
 
+from .common.event.event_dispatcher import EventDispatcher
+
 db = SQLAlchemy()
 login_manager = LoginManager()
-
-
 migrate = Migrate(db=db)
+dispatcher = EventDispatcher()
 
 
 def create_app(config_name='config.development.DevelopmentConfig'):
