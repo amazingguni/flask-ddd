@@ -5,27 +5,32 @@ name: Python application
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.7
-    - name: Install Dependencies
-      run: |
-        pip install poetry
-        poetry config virtualenvs.create false
-        poetry install
-    - name: Test with pytest
-      run: |
-        pytest
-        
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Load poetry cache
+        id: cached-poetry-dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
-      
+      - name: Install Dependencies
+        run: |
+          pip install poetry
+          poetry config virtualenvs.create false
+          poetry install
+      - name: Test with pytest
+        run: |
+          coverage run -m pytest
+          coverage report
