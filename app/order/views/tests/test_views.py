@@ -68,3 +68,14 @@ def test_place(db_session, client, loginned_user):
     assert order.shipping_info.message == '빨리 가져다 주셔요'
     assert order.get_total_amounts() == 56000
     assert order.state == OrderState.PAYMENT_WAITING
+
+
+def test_cancel(db_session, client, loginned_user, order):
+    # When
+    response = client.post(url_for('order.cancel', order_id=order.id))
+
+    # Then
+    utils.assert_redirect_response(
+        response, url_for('order.canceled', order_id=order.id))
+    db_session.refresh(order)
+    assert order.state == OrderState.CANCELED

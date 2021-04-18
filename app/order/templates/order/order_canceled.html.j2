@@ -1,0 +1,15 @@
+{% extends "base.html" %} 
+
+{% block title %} 마이샵 {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="alert alert-success" role="alert">
+        주문[{{ order_id }}]을 취소했습니다.
+    </div>
+
+    <a class="btn btn-primary" href="{{ url_for('user.order_detail', order_id=order_id) }}" role="button">주문 내역 보기</a>
+    <a class="btn btn-default" href="{{ url_for('user.orders') }}", role="button">주문 목록 보기</a>
+    <a class="btn btn-btn" href="{{url_for('home')}}" role="button">첫 화면으로 이동하기</a>
+</div>
+{% endblock %}

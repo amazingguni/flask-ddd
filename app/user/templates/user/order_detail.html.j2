@@ -16,7 +16,7 @@
     </div>
 </div>
 
-{# <form id="goCancelForm" action="/my/orders/{{order.number}/cancel" method="post"></form> #}
+<form id="goCancelForm" action="{{ url_for('order.cancel', order_id=order.id) }}" method="post"></form>
 {# <form id="goChangeShippingForm" action="/my/orders/${order.number}/shippingInfo" method="get"></form> #}
 
 <script>

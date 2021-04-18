@@ -17,6 +17,7 @@ from ..application.order_product import OrderProduct
 from ..application.order_request import OrderRequest
 from ..application.exceptions import NoOrderProductException
 from ..application.place_order_service import PlaceOrderService
+from ..application.cancel_order_service import CancelOrderService
 
 bp = Blueprint('order', __name__,
                template_folder='../templates', static_folder="../static", url_prefix='/order/')
@@ -96,6 +97,21 @@ def extract_shipping_info(request):
 @bp.route('/<int:order_id>/complete/', methods=['GET', ])
 def complete(order_id: int):
     return render_template('order/order_complete.html.j2', order_id=order_id)
+
+
+@login_required
+@bp.route('/<int:order_id>/cancel/', methods=['POST', ])
+@inject
+def cancel(order_id: int,
+           cancel_order_service: CancelOrderService = Provide[Container.cancel_order_service]):
+    cancel_order_service.cancel(order_id, current_user)
+    return redirect(url_for('order.canceled', order_id=order_id))
+
+
+@login_required
+@bp.route('/<int:order_id>/canceled/', methods=['GET', ])
+def canceled(order_id: int):
+    return render_template('order/order_canceled.html.j2', order_id=order_id)
 
 
 @bp.app_errorhandler(NoOrderProductException)
