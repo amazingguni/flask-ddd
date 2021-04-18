@@ -1,0 +1,2 @@
+class AlreadyShippedException(Exception):
+    pass

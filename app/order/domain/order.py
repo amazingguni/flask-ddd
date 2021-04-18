@@ -7,6 +7,7 @@ from .order_line import OrderLine
 from .order_state import OrderState
 from .shipping_info import ShippingInfo
 from app.user.domain.user import User
+from .exceptions import AlreadyShippedException
 
 
 class Order(db.Model):
@@ -36,6 +37,14 @@ class Order(db.Model):
 
     def get_total_amounts(self):
         return sum([line.get_amounts() for line in self.order_lines])
+
+    def cancel(self):
+        self.verify_not_yet_shipped()
+        self.state = OrderState.CANCELED
+
+    def verify_not_yet_shipped(self):
+        if not self.is_not_yet_shipped():
+            raise AlreadyShippedException
 
     def is_not_yet_shipped(self):
         return self.state == OrderState.PAYMENT_WAITING or \
