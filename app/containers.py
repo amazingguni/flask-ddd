@@ -8,6 +8,8 @@ from .catalog.infra.repository.sql_product_repository import SqlProductRepositor
 from .catalog.application.product_service import ProductService
 from .order.infra.dao.sql_order_summary_dao import SqlOrderSummaryDao
 from .order.infra.repository.sql_order_repository import SqlOrderRepository
+from .order.infra.repository.sql_order_repository import SqlOrderRepository
+from .order.infra.repository.sql_cart_repository import SqlCartRepository
 from .order.query.application.order_view_list_service import OrderViewListService
 from .order.application.place_order_service import PlaceOrderService
 from .order.application.cancel_order_service import CancelOrderService
@@ -32,8 +34,10 @@ class Container(containers.DeclarativeContainer):
         OrderViewListService, order_summary_dao=order_summary_dao)
     order_repository = providers.Factory(
         SqlOrderRepository, session=session)
+    cart_repository = providers.Factory(
+        SqlCartRepository, session=session)
     place_order_service = providers.Factory(
-        PlaceOrderService, product_repository=product_repository, order_repository=order_repository)
+        PlaceOrderService, cart_repository=cart_repository, order_repository=order_repository)
     refund_service = providers.Factory(ExternalRefundService)
     cancel_order_service = providers.Factory(
         CancelOrderService, order_repository=order_repository, refund_service=refund_service)

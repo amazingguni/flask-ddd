@@ -6,26 +6,24 @@ from app.user.domain.user import User
 
 from app.order.domain.order_state import OrderState
 from app.order.application.place_order_service import PlaceOrderService
-from app.order.application.order_product import OrderProduct
-from app.order.application.order_request import OrderRequest
+from app.order.domain.cart import Cart
 
 
 @pytest.fixture(scope='function')
-def place_order_service(product_repository, order_repository):
+def place_order_service(cart_repository, order_repository):
     return PlaceOrderService(
-        product_repository=product_repository, order_repository=order_repository)
+        cart_repository=cart_repository, order_repository=order_repository)
 
 
 def test_place_order(pre_data_db_session, place_order_service, shipping_info):
     # Given
     product = pre_data_db_session.query(Product).first()
     orderer = pre_data_db_session.query(User).first()
-    order_product = OrderProduct(product_id=product.id, quantity=1)
-    request = OrderRequest(order_products=[order_product],
-                           orderer=orderer, shipping_info=shipping_info)
+    cart = Cart(product=product, user=orderer, quantity=1)
+    pre_data_db_session.add(cart)
 
     # When
-    order = place_order_service.place_order(request)
+    order = place_order_service.place_order(orderer, shipping_info)
 
     # Then
     assert order.orderer == orderer

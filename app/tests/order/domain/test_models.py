@@ -2,7 +2,6 @@ from datetime import datetime
 
 from app.order.domain.order import Order
 from app.order.domain.order_line import OrderLine
-from app.order.domain.shipping_info import ShippingInfo, Receiver, Address
 from app.order.domain.order_state import OrderState
 from app.order.domain.cart import Cart
 

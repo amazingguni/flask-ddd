@@ -76,20 +76,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for order_product in order_products %}
-                        {% set product = products[loop.index - 1] %}
+                    {% for cart in carts %}
                         <tr>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.price }}</td>
-                            <td>{{ order_product.quantity }}</td>
-                                <input type="hidden" 
-                                    name="order_products[{{ loop.index - 1 }}].product_id" 
-                                    value="{{ product.id }}" /> 
-                                <input type="hidden" 
-                                    name="order_products[{{ loop.index - 1 }}].quantity" 
-                                    value="{{ order_product.quantity }}" />
-                            </td>
-                            <td>{{ product.price * order_product.quantity }}</td>
+                            <td>{{ cart.product.name }}</td>
+                            <td>{{ cart.product.price }}</td>
+                            <td>{{ cart.quantity }}</td>
+                            <td>{{ cart.get_amounts() }}</td>
                         </tr>
                     {% endfor %}
                     </tbody> 

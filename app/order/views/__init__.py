@@ -7,18 +7,13 @@ from flask_login import login_required, current_user
 
 from app.containers import Container
 
-
-from app.catalog.domain.product_repository import ProductRepository
-
-from app.order.domain.order import Order
+from app.order.domain.cart import Cart
 from app.order.domain.shipping_info import ShippingInfo, Receiver, Address
-from app.order.domain.order_line import OrderLine
-from app.order.application.order_product import OrderProduct
-from app.order.application.order_request import OrderRequest
 from app.order.application.exceptions import NoOrderProductException
 from app.order.application.place_order_service import PlaceOrderService
 from app.order.application.cancel_order_service import CancelOrderService
 from app.order.domain.order_repository import OrderRepository
+from app.order.domain.cart_repository import CartRepository
 
 bp = Blueprint('order', __name__,
                template_folder='../templates', static_folder="../static", url_prefix='/order/')
@@ -26,8 +21,8 @@ bp = Blueprint('order', __name__,
 
 @login_required
 @bp.route('/confirm/', methods=['GET', ])
-def confirm():
-    order_products = []
+@inject
+def confirm(cart_repository: CartRepository = Provide[Container.cart_repository]):
     try:
         product_id = int(request.args.get('product_id'))
         quantity = int(request.args.get('quantity'))
@@ -35,51 +30,24 @@ def confirm():
         raise InternalServerError('Invalid Value: ' + str(e))
 
     if product_id and quantity:
-        order_products.append(OrderProduct(
-            product_id=product_id, quantity=quantity))
-    products = get_products(order_products)
-    total_amounts = 0
-    for product, order_product in zip(products, order_products):
-        total_amounts += product.price * order_product.quantity
+        cart = Cart(
+            user=current_user, product_id=product_id, quantity=quantity)
+        cart_repository.save(cart)
+    carts = cart_repository.find_by_user(current_user)
+    total_amounts = sum([cart.get_amounts() for cart in carts])
     return render_template(
         'order/order_confirm.html.j2',
-        orderer=current_user, order_products=order_products,
-        products=products, total_amounts=total_amounts)
-
-
-@inject
-def get_products(order_products, product_repository: ProductRepository = Provide[Container.product_repository]):
-    result = []
-    for order_product in order_products:
-        product = product_repository.find_by_id(order_product.product_id)
-        result.append(product)
-    return result
+        orderer=current_user, carts=carts,
+        total_amounts=total_amounts)
 
 
 @login_required
 @bp.route('/place/', methods=['POST', ])
 @inject
 def place(place_order_service: PlaceOrderService = Provide[Container.place_order_service]):
-    order_products = extract_order_products(request)
     shipping_info = extract_shipping_info(request)
-    order_request = OrderRequest(order_products=order_products, orderer=current_user,
-                                 shipping_info=shipping_info)
-    order = place_order_service.place_order(order_request)
+    order = place_order_service.place_order(current_user, shipping_info)
     return redirect(url_for('order.complete', order_id=order.id))
-
-
-def extract_order_products(request):
-    result = []
-    i = 0
-    while True:
-        product_id = request.form.get(f'order_products[{i}].product_id')
-        quantity = request.form.get(f'order_products[{i}].quantity')
-        if not product_id or not quantity:
-            break
-        result.append(OrderProduct(product_id=int(
-            product_id), quantity=int(quantity)))
-        i += 1
-    return result
 
 
 def extract_shipping_info(request):

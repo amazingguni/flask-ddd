@@ -1,9 +1,6 @@
-import contextlib
 from flask import template_rendered
 from datetime import datetime
 import pytest
-import sqlalchemy as sa
-from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
 from app import db as app_db
@@ -210,6 +207,12 @@ def category_repository(db_session):
 def product_repository(db_session):
     from app.catalog.infra.repository.sql_product_repository import SqlProductRepository
     return SqlProductRepository(db_session)
+
+
+@pytest.fixture(scope='function')
+def cart_repository(db_session):
+    from app.order.infra.repository.sql_cart_repository import SqlCartRepository
+    return SqlCartRepository(db_session)
 
 
 @pytest.fixture(scope='function')
