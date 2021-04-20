@@ -76,6 +76,7 @@ def loginned_user(app, db_session):
     user = User(username='loginned_user', password='1234',
                 blocked=False, is_admin=False)
     db_session.add(user)
+    db_session.commit()
 
     @app.login_manager.request_loader
     def load_user_from_request(request):
