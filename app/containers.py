@@ -11,6 +11,7 @@ from .order.infra.repository.sql_order_repository import SqlOrderRepository
 from .order.infra.repository.sql_order_repository import SqlOrderRepository
 from .order.infra.repository.sql_cart_repository import SqlCartRepository
 from .order.query.application.order_view_list_service import OrderViewListService
+from .order.application.add_cart_service import AddCartService
 from .order.application.place_order_service import PlaceOrderService
 from .order.application.cancel_order_service import CancelOrderService
 from .order.infra.paygate.external_refund_service import ExternalRefundService
@@ -36,6 +37,8 @@ class Container(containers.DeclarativeContainer):
         SqlOrderRepository, session=session)
     cart_repository = providers.Factory(
         SqlCartRepository, session=session)
+    add_cart_service = providers.Factory(
+        AddCartService, cart_repository=cart_repository)
     place_order_service = providers.Factory(
         PlaceOrderService, cart_repository=cart_repository, order_repository=order_repository)
     refund_service = providers.Factory(ExternalRefundService)
