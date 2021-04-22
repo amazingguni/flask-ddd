@@ -9,9 +9,9 @@ from .catalog.application.product_service import ProductService
 from .order.infra.dao.sql_order_summary_dao import SqlOrderSummaryDao
 from .order.infra.repository.sql_order_repository import SqlOrderRepository
 from .order.infra.repository.sql_order_repository import SqlOrderRepository
-from .order.infra.repository.sql_cart_repository import SqlCartRepository
+from .cart.infra.repository.sql_cart_repository import SqlCartRepository
 from .order.query.application.order_view_list_service import OrderViewListService
-from .order.application.add_cart_service import AddCartService
+from .cart.application.add_cart_service import AddCartService
 from .order.application.place_order_service import PlaceOrderService
 from .order.application.cancel_order_service import CancelOrderService
 from .order.infra.paygate.external_refund_service import ExternalRefundService

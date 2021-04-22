@@ -1,6 +1,6 @@
 from app.user.domain.user import User
-from app.order.domain.cart import Cart
-from app.order.infra.repository.sql_cart_repository import SqlCartRepository
+from app.cart.domain.cart import Cart
+from app.cart.infra.repository.sql_cart_repository import SqlCartRepository
 
 
 def test_save(db_session, loginned_user, product):

@@ -3,7 +3,7 @@
 {% block title %} 제품 상세 {% endblock %} 
 
 {% block content %}
-<form method="post" action="{{ url_for('order.add_cart') }}">
+<form method="post" action="{{ url_for('cart.add_cart') }}">
     <div class="row">
         <div class="col-md-4">
             <img src="{{ product.image_url }}" class="img-responsive">

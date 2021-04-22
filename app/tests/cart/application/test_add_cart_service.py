@@ -2,8 +2,8 @@ import pytest
 
 from app.catalog.domain.product import Product
 
-from app.order.application.add_cart_service import AddCartService
-from app.order.domain.cart import Cart
+from app.cart.application.add_cart_service import AddCartService
+from app.cart.domain.cart import Cart
 
 
 @pytest.fixture(scope='function')

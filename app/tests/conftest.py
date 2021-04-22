@@ -212,7 +212,7 @@ def product_repository(db_session):
 
 @pytest.fixture(scope='function')
 def cart_repository(db_session):
-    from app.order.infra.repository.sql_cart_repository import SqlCartRepository
+    from app.cart.infra.repository.sql_cart_repository import SqlCartRepository
     return SqlCartRepository(db_session)
 
 

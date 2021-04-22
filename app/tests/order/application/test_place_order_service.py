@@ -3,10 +3,10 @@ import pytest
 
 from app.catalog.domain.product import Product
 from app.user.domain.user import User
+from app.cart.domain.cart import Cart
 
 from app.order.domain.order_state import OrderState
 from app.order.application.place_order_service import PlaceOrderService
-from app.order.domain.cart import Cart
 
 
 @pytest.fixture(scope='function')

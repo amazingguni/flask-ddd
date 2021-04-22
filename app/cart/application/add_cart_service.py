@@ -1,8 +1,8 @@
 
 from app.user.domain.user import User
 
-from app.order.domain.cart_repository import CartRepository
-from app.order.domain.cart import Cart
+from app.cart.domain.cart_repository import CartRepository
+from app.cart.domain.cart import Cart
 
 
 class AddCartService:

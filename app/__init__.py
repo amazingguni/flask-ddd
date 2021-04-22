@@ -34,9 +34,10 @@ def create_app(config_name='config.development.DevelopmentConfig'):
     from .user import views as user_views
     from .catalog import views as catalog_views
     from .admin import views as admin_views
+    from .cart import views as cart_views
     from .order import views as order_views
 
-    views = [user_views, catalog_views, admin_views, order_views]
+    views = [user_views, catalog_views, admin_views, cart_views, order_views]
     register_blueprints(app, views)
 
     from .containers import Container
